@@ -1,0 +1,50 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+
+  background-color: #f6f6f4;
+  color: #000;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --color-styles-text-primary: #071015;
+  --text-on-color: #FFF;
+  --Gray-50: #272D2D;
+  --Primary-50: #F4FF47;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a, button {
+  all: unset;
+}
+
+.text-wrapper {
+  color: var(--color-styles-text-primary);
+  font-weight: 700;
+}
+
+.button {
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  border-radius: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.primary {
+  background: var(--Primary-50);
+  color: var(--color-styles-text-primary);
+}
+
+.secondary {
+  background: var(--Gray-50);
+  color: var(--text-on-color);
+}

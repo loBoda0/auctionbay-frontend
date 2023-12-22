@@ -1,0 +1,26 @@
+nav {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100vw;
+  max-width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  .nav-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    img {
+      height: 4rem;
+      width: 4rem;
+    }
+  };
+  .nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  };
+}

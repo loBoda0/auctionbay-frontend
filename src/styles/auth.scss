@@ -1,0 +1,19 @@
+.page-wrapper {
+  display: flex;
+  .auth-left {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    img {
+      margin: 0 auto;
+      height: 100vh;
+      width: auto;
+    }
+  }
+  .auth-right {
+    width: 29.5rem;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+}
