@@ -1,8 +1,11 @@
 import React from 'react'
+import AuthLayout from '../layouts/AuthLayout'
 
 const ForgotPassword: React.FC = () => {
   return (
-    <div>ForgotPassword</div>
+    <AuthLayout>
+      <div>ForgotPassword</div>
+    </AuthLayout>
   )
 }
 

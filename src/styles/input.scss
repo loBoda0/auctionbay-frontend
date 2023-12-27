@@ -1,0 +1,35 @@
+form {
+  width: 100%;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: stretch;
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .inter {
+      display: flex;
+      gap: 1rem;
+      .medium {
+        width: calc(50% - 8px);
+      }
+    }
+  }
+}
+
+.input {
+  padding: .5rem 1rem;
+  width: 100%;
+  border: 1px solid var(--Gray-20);
+  border-radius: 1rem;
+  width: auto;
+  &:hover {
+    border: 1px solid var(--Gray-30); 
+  }
+  &:focus {
+    border-color: var(--Primary-50);
+  }
+}

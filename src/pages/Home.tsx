@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     <>
       <Navbar>
         <div className='nav-left'>
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" className='logo' />
         </div>
         
         <div className='nav-right'>
@@ -30,7 +30,7 @@ const Home: React.FC = () => {
             Simple way for selling your unused products, or getting a deal on product you want!
           </p>
         </div>
-        <Link to={'/signup'} className='button primary bidding'>Start bidding</Link>
+        <Link to={'/signup'} className='button primary'>Start bidding</Link>
 
         <img src={landingImage} alt="landing image" />
       </div>

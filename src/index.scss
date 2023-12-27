@@ -14,16 +14,19 @@
   --text-on-color: #FFF;
   --Gray-50: #272D2D;
   --Primary-50: #F4FF47;
-
+  --Gray-20: #DDE9E6;
+  --Gray-30: #B0BFBD;
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-a, button {
+a, button, input {
   all: unset;
+  display: inline;
 }
 
 .text-wrapper {
@@ -34,12 +37,13 @@ a, button {
 .button {
   padding: .5rem 1rem;
   border-radius: 1rem;
-  border-radius: 1rem;
   font-weight: 500;
   cursor: pointer;
+  text-align: center;
 }
 
 .primary {
+  margin-top: 2rem;
   background: var(--Primary-50);
   color: var(--color-styles-text-primary);
 }
@@ -47,4 +51,9 @@ a, button {
 .secondary {
   background: var(--Gray-50);
   color: var(--text-on-color);
+}
+
+.logo {
+  height: 4rem;
+  width: 4rem;
 }
