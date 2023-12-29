@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     try {
       const { data: userData } = await axios.post('http://localhost:3000/login', data)
       login(userData[0], userData[1])
-      navigate('/auctions')
+      navigate('/profile')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;

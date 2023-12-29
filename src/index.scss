@@ -16,6 +16,13 @@
   --Primary-50: #F4FF47;
   --Gray-20: #DDE9E6;
   --Gray-30: #B0BFBD;
+  --Text-Tertiary: #74817F;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 * {
@@ -27,6 +34,7 @@
 a, button, input {
   all: unset;
   display: inline;
+  max-height: 56px;
 }
 
 .text-wrapper {
@@ -56,4 +64,39 @@ a, button, input {
 .logo {
   height: 4rem;
   width: 4rem;
+  margin-right: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 120%;
+  color: var(--color-styles-text-primary);
+}
+
+h3 {
+  font-size: 1.625rem;
+  line-height: 120%;
+  color: var(--color-styles-text-primary);
+}
+
+p {
+  color: var(--Text-Tertiary);
+  text-align: center;
+  font-weight: 300;
+  line-height: 150%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.button-img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 38px;
 }

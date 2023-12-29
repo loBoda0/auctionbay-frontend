@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../components/ui/Navbar'
 import logo from '/logo.svg'
 import { Link } from 'react-router-dom'
 import '../styles/home.scss'
@@ -8,19 +7,17 @@ import landingImage from '/landing-image.svg'
 const Home: React.FC = () => {
   return (
     <>
-      <Navbar>
-        <div className='nav-left'>
-          <img src={logo} alt="logo" className='logo' />
-        </div>
+      <nav>
+        <img src={logo} alt="logo" className='logo' />
         
-        <div className='nav-right'>
+        <div className='actions'>
           <Link to={'/login'} className='text-wrapper'>Log in</Link>
           <p>or</p>
           <Link to={'/signup'} className='button secondary'>
               Sign Up
           </Link>
         </div>
-      </Navbar>
+      </nav>
       <div className="home-wrapper">
         <div className="hero-text">
           <h1>
