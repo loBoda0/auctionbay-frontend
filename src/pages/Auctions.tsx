@@ -4,10 +4,19 @@ import HomeLayout from '../layouts/HomeLayout'
 import axios from 'axios'
 import AuctionsContainer from '../containers/AuctionsContainer'
 import { Auction } from '../interfaces/auction'
+/* import { useQuery } from 'react-query'
+import * as API from '../api/Api' */
 
 const Auctions: React.FC = () => {
   const { token } = useAuth()
   const [auctions, setAuctions] = useState<Auction[]>([])
+
+/*   const { status, data, error, isFetching } = useQuery(
+    ['fetchAuctions'],
+    () => API.fetchAuctions()
+  )
+
+  console.log(data) */
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -22,9 +31,7 @@ const Auctions: React.FC = () => {
         const response = await axios.get(
           `http://localhost:3000/auctions`,
           {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
+            withCredentials: true
           }
         );
   

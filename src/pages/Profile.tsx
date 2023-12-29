@@ -22,9 +22,7 @@ const Profile: React.FC = () => {
         const response = await axios.get(
           `http://localhost:3000/auctions?type=auctioner`,
           {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
+            withCredentials: true
           }
         );
   
