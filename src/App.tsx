@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import Auctions from './pages/Auctions';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Route path='/signup' element={<Signup />} />
       <Route path='/forgot-password' element={<ForgotPassword />} />
       <Route path='/auctions' element={<Auctions />} />
+      <Route path='/profile' element={<Profile />} />
       </Routes>
     </Router>
   )

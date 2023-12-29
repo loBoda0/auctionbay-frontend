@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
 import HomeLayout from '../layouts/HomeLayout'
-import axios from 'axios'
+import { useAuth } from '../hooks/useAuth'
 import AuctionsContainer from '../containers/AuctionsContainer'
 import { Auction } from '../interfaces/auction'
+import axios from 'axios'
 
-const Auctions: React.FC = () => {
-  const { token } = useAuth()
+const Profile: React.FC = () => {
+  const { token, user } = useAuth()
   const [auctions, setAuctions] = useState<Auction[]>([])
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Auctions: React.FC = () => {
     (async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/auctions`,
+          `http://localhost:3000/auctions?type=auctioner`,
           {
             headers: {
               'Authorization': `Bearer ${token}`
@@ -47,11 +47,12 @@ const Auctions: React.FC = () => {
   return (
     <HomeLayout>
       <div className='title'>
-        <h1>Auctions</h1>
+        <h1>Hello {user?.first_name} {user?.last_name}!</h1>
       </div>
+      
       <AuctionsContainer auctions={auctions} />
     </HomeLayout>
   )
 }
 
-export default Auctions
+export default Profile

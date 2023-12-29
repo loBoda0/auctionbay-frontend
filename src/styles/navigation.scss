@@ -1,22 +1,45 @@
 nav {
   box-sizing: border-box;
-  position: absolute;
-  width: 100vw;
-  max-width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 32px;
   .nav-left {
     display: flex;
-    align-items: center;
+  }
+  .nav-tabs {
+    display: flex;
     justify-content: center;
-    gap: 8px;
-  };
-  .nav-right {
+    align-items: center;
+    gap: .25rem;
+    background-color: #fff;
+    border-radius: 32px;
+    padding: 4px;
+  }
+  .actions {
     display: flex;
     align-items: center;
+    gap: .25rem;
+  }
+  .nav-tab {
+    display: flex;
+    padding: .5rem 1rem;
     justify-content: center;
-    gap: 8px;
-  };
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    line-height: 120%;
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  .nav-tab.active {
+    background-color: #000;
+    border-radius: 2rem;
+    color: var(--text-on-color);
+    img {
+      filter: invert(100%) grayscale(100%);
+    }
+  }
 }
