@@ -3,8 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 export interface RegisterUserFields {
-  first_name?: string
-  last_name?: string
+  first_name: string | undefined
+  last_name: string | undefined
   email: string
   password: string
   confirm_password: string
@@ -12,8 +12,8 @@ export interface RegisterUserFields {
 
 export const useRegisterForm = () =>{
   const RegisterSchema = Yup.object().shape({
-    first_name: Yup.string().notRequired(),
-    last_name: Yup.string().notRequired(),
+    first_name: Yup.string().required('Please enter your first name'),
+    last_name: Yup.string().required('Please enter your last name'),
     email: Yup.string().email().required('Please enter a valid email'),
     password: Yup.string()
       /* .matches(
@@ -45,6 +45,6 @@ export const useRegisterForm = () =>{
   return {
     handleSubmit,
     errors,
-    control,
+    control
   }
 }

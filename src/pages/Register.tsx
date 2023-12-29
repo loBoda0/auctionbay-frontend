@@ -1,25 +1,26 @@
 import React from 'react'
 import AuthLayout from '../layouts/AuthLayout'
 import Input from '../components/ui/Input'
-import { useForm } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
+import * as API from '../api/Api'
+import { RegisterUserFields, useRegisterForm } from '../hooks/react-hook-form/useRegisterForm'
 import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const Signup: React.FC = () => {
-  const { register, handleSubmit } = useForm()
+  const { handleSubmit, errors, control } = useRegisterForm()
   const navigate = useNavigate()
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data: RegisterUserFields) => {
     try {
-      const serverData = await axios.post('http://localhost:3000/signup', data)
-      console.log(serverData)
+      await API.register(data)
       navigate('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response.status === 400) {
           // Handle BadRequestException
-          console.log(axiosError.response.data)
+          console.error(axiosError.response.data)
         } else {
           // Handle other errors
           console.error('Unexpected error:', axiosError.message);
@@ -36,46 +37,75 @@ const Signup: React.FC = () => {
       <form onSubmit={onSubmit} >
         <div className="inputs">
           <div className="inter">
-            <Input
-              id="firstName"
-              name="first_name"
-              label="First Name"
-              placeholder="First Name"
-              size='medium'
-              register={register}
-              />
-            <Input
-              id="lastName"
-              name="last_name"
-              label="Last Name"
-              placeholder="Last Name"
-              size='medium'
-              register={register}
-              />
+            <Controller
+              control={control}
+              name='first_name'
+              render={({field}) => (
+                <Input
+                  label="First Name"
+                  name='first_name'
+                  control={field}
+                  placeholder="First Name"
+                  errors={errors}
+                  size='medium'
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name='last_name'
+              render={({field}) => (
+                <Input 
+                  label="Last Name"
+                  name='last_name'
+                  control={field}
+                  placeholder="Last Name"
+                  errors={errors}
+                  size='medium'
+                />
+              )}
+            />
           </div>
-        <Input
-          id="email"
-          type="email"
-          name="email"
-          label="E-mail"
-          placeholder="E-mail"
-          register={register}
-          />
-        <Input
-          id="password"
-          type="password"
-          name="password"
-          label="Password"
-          placeholder="Password"
-          register={register}
-          />
-        <Input
-          id="repeatPassword"
-          type="password"
-          name="repeat_password"
-          label="Repeat password"
-          placeholder="Repeat password"
-          register={register}
+        <Controller
+          control={control}
+          name='email'
+          render={({field}) => (
+            <Input
+              label="E-mail"
+              name='email'
+              control={field}
+              placeholder="E-mail" 
+              errors={errors}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name='password'
+          render={({field}) => (
+            <Input
+              type="password"
+              label="Password"
+              name='password'
+              placeholder="Password"
+              control={field}
+              errors={errors}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name='confirm_password'
+          render={({field}) => (
+            <Input
+              type="password"
+              label="Repeat password"
+              name='repeat_password'
+              placeholder="Repeat password"
+              control={field}
+              errors={errors}
+            />
+          )}
         />
         <button className='button primary' type='submit'>Submit Form</button>
         </div>
