@@ -26,10 +26,16 @@ form {
   border: 1px solid var(--Gray-20);
   border-radius: 1rem;
   width: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
   &:hover {
     border: 1px solid var(--Gray-30); 
   }
-  &:focus {
+  &:has(input:focus) {
     border-color: var(--Primary-50);
+  }
+  input {
+    width: 100%;
   }
 }

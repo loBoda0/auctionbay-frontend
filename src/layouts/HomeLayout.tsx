@@ -2,18 +2,19 @@ import React, { useEffect } from 'react'
 
 import { PassChildren } from '../interfaces'
 import Navbar from '../components/ui/Navbar'
-import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { userStorage } from '../stores/userStorage'
 
 
 const HomeLayout: React.FC<PassChildren> = ({children}) => {
-  const { user, token } = useAuth()
+
+  const user = userStorage.getUser()
   const navigate = useNavigate()
   useEffect(() => {
-    if (!user || !token) {
+    if (!user) {
       navigate('/login')
     }
-  }, [user, token, navigate])
+  }, [user, navigate])
   
   return (
     <>

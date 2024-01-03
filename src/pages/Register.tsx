@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
-import Input from '../components/ui/Input'
+import Input, { InputType } from '../components/ui/Input'
 import { Controller } from 'react-hook-form'
 import * as API from '../api/Api'
 import { RegisterUserFields, useRegisterForm } from '../hooks/react-hook-form/useRegisterForm'
@@ -10,6 +10,17 @@ import { useNavigate } from 'react-router-dom'
 const Signup: React.FC = () => {
   const { handleSubmit, errors, control } = useRegisterForm()
   const navigate = useNavigate()
+
+  const [togglePassword, setTogglePassword] = useState<InputType>('password')
+  const [toggleConfirmPassword, setToggleConfirmPassword] = useState<InputType>('password')
+  
+  const showPassword = () => {
+    setTogglePassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
+  };
+
+  const showConfirmPassword = () => {
+    setToggleConfirmPassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
+  }
 
   const onSubmit = handleSubmit(async (data: RegisterUserFields) => {
     try {
@@ -84,12 +95,14 @@ const Signup: React.FC = () => {
           name='password'
           render={({field}) => (
             <Input
-              type="password"
+              type={togglePassword}
               label="Password"
               name='password'
               placeholder="Password"
               control={field}
               errors={errors}
+              isPassword={true}
+              togglePassword={showPassword}
             />
           )}
         />
@@ -98,12 +111,14 @@ const Signup: React.FC = () => {
           name='confirm_password'
           render={({field}) => (
             <Input
-              type="password"
+              type={toggleConfirmPassword 	}
               label="Repeat password"
               name='repeat_password'
               placeholder="Repeat password"
               control={field}
               errors={errors}
+              isPassword={true}
+              togglePassword={showConfirmPassword}
             />
           )}
         />

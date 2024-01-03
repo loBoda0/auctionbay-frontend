@@ -19,7 +19,7 @@ nav {
   .actions {
     display: flex;
     align-items: center;
-    gap: .25rem;
+    gap: .5rem;
   }
   .nav-tab {
     display: flex;
@@ -29,6 +29,7 @@ nav {
     gap: 4px;
     align-self: stretch;
     line-height: 120%;
+    cursor: pointer;
     img {
       width: 1.5rem;
       height: 1.5rem;
