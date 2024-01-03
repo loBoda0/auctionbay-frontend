@@ -5,14 +5,19 @@ import Avatar from '/Avatar.svg'
 import Home from '/icons/Home.svg'
 import Person from '/icons/Person.svg'
 import '../../styles/navigation.scss'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
-import { useAuth } from '../../hooks/useAuth'
+import { userStorage } from '../../stores/userStorage'
 
 const Navbar: React.FC = () => {
-  const { user } = useAuth()
+  const user = userStorage.getUser()
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const avatarImg = `http://localhost:3000/public/${user?.avatar}`
+
+  if (!user) {
+    navigate('/')
+  }
 
   return (
     <nav>
@@ -36,7 +41,7 @@ const Navbar: React.FC = () => {
               <img src={CTAButton} alt="add auction" className='button-img' />
             </button>
             <button>
-              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" className='button-img' />
+              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={() => userStorage.clearUser()} className='button-img' />
             </button>
           </div>
         </div>
