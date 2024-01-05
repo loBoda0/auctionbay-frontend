@@ -1,10 +1,14 @@
-import { PassChildren } from '../interfaces'
 import AuthImage from '/auth-image.svg'
 import logo from '/logo.svg'
 import '../styles/auth.scss'
 import { Link, useLocation } from 'react-router-dom'
+import { ReactNode } from 'react'
 
-const AuthLayout: React.FC<PassChildren> = ({children}) => {
+interface ComponentProps {
+  children: ReactNode;
+}
+
+const AuthLayout: React.FC<ComponentProps> = ({children}) => {
   const { pathname } = useLocation()
 
   return (
