@@ -46,6 +46,10 @@ const Signup: React.FC = () => {
   return (
     <AuthLayout>
       <form onSubmit={onSubmit} >
+        <div className="auth-title">
+          <h1>Hello!</h1>
+          <p>Please enter your details</p>
+        </div>
         <div className="inputs">
           <div className="inter">
             <Controller

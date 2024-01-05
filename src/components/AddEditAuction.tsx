@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { useAddEditAuction } from '../hooks/useAddEditAuction'
-import TrashIcon from "/icons/Delete.svg";
+import Trash from "/icons/Delete.svg";
 import { Controller } from 'react-hook-form';
 import Input from './ui/Input';
 
@@ -43,6 +43,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit}) => {
         <h4>{title}</h4>
       </div>
     <form>
+      <div className="inputs">
       <div className="modal-image-wrapper">
        <label
         htmlFor="image"
@@ -63,7 +64,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit}) => {
                     setImagePreview(null);
                     setFile(null);
                   }}>
-                  <img src={TrashIcon} />
+                  <img src={Trash} />
                 </div>
               )}
             </>
@@ -141,7 +142,19 @@ const AddEditAuction: React.FC<Props> = ({isEdit}) => {
           )}
         />
       </div>
+      </div>
     </form>
+    <div className="modal-footer">
+      { isEdit ? <>
+          <button className='button tertiary'>Discard changes</button>
+          <button className='button secondary'>Edit auction</button>
+        </>
+      : <>
+        <button className='button tertiary'>Cancel</button>
+        <button className='button primary'>Start auction</button>
+      </>
+      }
+    </div>
     </>
   )
 }
