@@ -1,56 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import HomeLayout from '../layouts/HomeLayout'
-import { useAuth } from '../hooks/useAuth'
 import AuctionsContainer from '../containers/AuctionsContainer'
+import * as API from '../api/Api'
+import { userStorage } from '../stores/userStorage'
+import clsx from 'clsx'
 import { Auction } from '../interfaces/auction'
-import axios from 'axios'
+
+type Types = 'my' | 'bidding' | 'won'
 
 const Profile: React.FC = () => {
-  const { token, user } = useAuth()
-  const [auctions, setAuctions] = useState<Auction[]>([])
+  const user = userStorage.getUser()
+  const [type, setType] = useState<Types>('my');
+  const [data, setData] = useState<Auction[]>([])
+  const [isFetching, setIsFetching] = useState(false)
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    if (!token) {
-      return
-    }
-  
-    (async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/auctions?type=auctioner`,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
-  
-        if (!signal.aborted) {
-          setAuctions(response.data)
-        }
+        const { data: receivedData }: {data: Auction[]} = await API.fetchAuctionsByUser(type);
+        console.log('Fetching data', receivedData);
+        setData(receivedData);
+        setIsFetching(false);
       } catch (error) {
-        if (!signal.aborted) {
-          console.error(error);
-        }
+        // Handle errors here
+        console.error('Error fetching data:', error);
       }
-    })();
-  
-    return () => {
-      // Cancel the request when the component unmounts
-      abortController.abort();
     };
-  }, [token]);
+  
+    fetchData();
+  }, [type]);
 
   return (
     <HomeLayout>
       <div className='title'>
         <h1>Hello {user?.first_name} {user?.last_name}!</h1>
       </div>
-      
-      <AuctionsContainer auctions={auctions} />
+      <div className="profile-tabs-wrapper">
+        <div className="profile-tabs">
+          <button className={clsx('profile-tab', type === 'my' && 'active')} onClick={() => setType('my')}>My Auctions</button>
+          {/* <button className={clsx('profile-tab', type === 'bidding' && 'active')} onClick={() => setType('winning')}>Bidding</button> */}
+          <button className={clsx('profile-tab', type === 'won' && 'active')} onClick={() => setType('won')}>Won</button>
+        </div>
+      </div>
+      {isFetching ? (
+        <h1>Loading...</h1>
+      ) : (
+        <AuctionsContainer auctions={data} />
+      )
+      }
     </HomeLayout>
   )
 }

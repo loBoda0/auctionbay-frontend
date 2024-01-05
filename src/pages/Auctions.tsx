@@ -1,55 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
 import HomeLayout from '../layouts/HomeLayout'
-import axios from 'axios'
 import AuctionsContainer from '../containers/AuctionsContainer'
+import * as API from '../api/Api'
 import { Auction } from '../interfaces/auction'
 
 const Auctions: React.FC = () => {
-  const { token } = useAuth()
-  const [auctions, setAuctions] = useState<Auction[]>([])
+  const [data, setData] = useState<Auction[]>([])
+  const [isFetching, setIsFetching] = useState(false)
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    if (!token) {
-      return
-    }
-  
-    (async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/auctions`,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
-  
-        if (!signal.aborted) {
-          setAuctions(response.data)
-        }
+        const { data: receivedData }: {data: Auction[]} = await API.fetchAuctions();
+        console.log('Fetching data', receivedData);
+        setData(receivedData);
+        setIsFetching(false);
       } catch (error) {
-        if (!signal.aborted) {
-          console.error(error);
-        }
+        // Handle errors here
+        console.error('Error fetching data:', error);
       }
-    })();
-  
-    return () => {
-      // Cancel the request when the component unmounts
-      abortController.abort();
     };
-  }, [token]);
+  
+    fetchData();
+  }, []);
+  
+  
 
   return (
     <HomeLayout>
       <div className='title'>
         <h1>Auctions</h1>
       </div>
-      <AuctionsContainer auctions={auctions} />
+      {isFetching ? (
+        <h1>Loading...</h1>
+      ) : (
+        <AuctionsContainer auctions={data} />
+        )
+      }
     </HomeLayout>
   )
 }

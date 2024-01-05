@@ -10,12 +10,14 @@ export async function apiRequest<D = Record<string, unknown>, R = unknown>(
 ) {
   try {
     const response = await Axios.request<R>({
-      baseURL: process.env.REACT_APP_API_URL,
+      baseURL: import.meta.env.VITE_REACT_APP_API_URL,
       url: path,
       method: method,
       data: input,
-      headers: options?.headers,
-      withCredentials: true,
+      headers: {
+        ...options?.headers,
+      },
+      withCredentials: true
     })
     return response
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,3 +25,6 @@ export async function apiRequest<D = Record<string, unknown>, R = unknown>(
     return error.response
   }
 }
+
+export * from './User'
+export * from './Auction'

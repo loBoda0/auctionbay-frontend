@@ -1,0 +1,71 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  width: 533px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #333;
+}
+
+.image-label {
+  cursor: pointer;
+  border-radius: 1rem; // The equivalent of rounded-2xl in Tailwind
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.modal-image-wrapper {
+  margin-bottom: 1.5rem; // Equivalent to mb-3 in Tailwind
+  display: flex; // Equivalent to flex in Tailwind
+  justify-content: center; // Equivalent to justify-center in Tailwind
+  align-items: center; // Equivalent to items-center in Tailwind
+  background-color: #fff; // Replace $background with your color variable
+  border-radius: 1rem; // Equivalent to rounded-2xl in Tailwind
+  width: 100%; // Equivalent to w-full in Tailwind
+  height: 12rem; // Equivalent to h-48 in Tailwind
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Equivalent to object-cover in Tailwind
+  border-radius: 1rem; // Equivalent to rounded-2xl in Tailwind
+}
+
+.remove-image {
+  top: 1rem; // Equivalent to top-5 in Tailwind
+  right: 1rem; // Equivalent to right-5 in Tailwind
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
