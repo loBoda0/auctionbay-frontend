@@ -5,5 +5,7 @@ export interface Auction {
   title: string
   description: string
   starting_price: number,
-  end_date: Date
+  end_date: Date,
+  auctioner: string,
+  image: string
 }

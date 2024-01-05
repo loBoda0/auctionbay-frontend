@@ -1,34 +1,38 @@
 import clsx from 'clsx'
 import React from 'react'
+import Eye from '/icons/Eye.svg'
 
 import '../../styles/input.scss'
-import { FieldValues, UseFormRegister } from 'react-hook-form'
 
 export type InputSize = 'medium' | 'large'
-export type InputType = 'text' | 'email' | 'password'
+export type InputType = 'text' | 'email' | 'password' | 'date'
 
 export type InputProps = {
-  id: string
   name: string
   label: string
   placeholder: string
   type?: InputType
   size?: InputSize
-  className?: string,
-  register: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any
+  isPassword?: boolean
+  togglePassword?: () => void 
 } 
 
 const Input: React.FC<InputProps> = (
   (
     {
-      id,
       name,
       label,
       type = 'text',
       size = 'large',
+      isPassword = false,
       placeholder,
-      register,
-      ...props
+      control,
+      errors,
+      togglePassword
     }
   ) => {
     return (
@@ -36,15 +40,20 @@ const Input: React.FC<InputProps> = (
         <label htmlFor={name} className='input-label'>
           {label}
         </label>
+        <div className="input">
         <input
-          id={id}
-          {...register(name)}
+          {...control}
           type={type}
           aria-label={label}
           placeholder={placeholder}
-          className='input'
-          {...props}
         />
+        {isPassword && <img src={Eye} alt="toggle password" onClick={togglePassword} className='pass-toggle' />}
+        </div>
+        {errors[name] && (
+        <div>
+          {errors[name].message}
+        </div>
+      )}
       </div>
     )
   }

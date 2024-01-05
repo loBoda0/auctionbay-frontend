@@ -2,6 +2,7 @@ import React from 'react'
 import { Auction } from '../interfaces/auction'
 import '../styles/auctions.scss'
 import EmptyState from '../components/EmptyState'
+import AuctionCard from '../components/AuctionCard'
 
 interface ChildProps {
     auctions: Auction[]
@@ -19,7 +20,7 @@ const AuctionsContainer: React.FC<ChildProps> = ({ auctions }) => {
   return (
     <div className='auctions-wrapper'>
       {auctions.map((auction) => (
-        <div key={auction.id}>{auction.title}</div>
+        <AuctionCard key={auction.id} auction={auction} />
       ))}
     </div>
   )

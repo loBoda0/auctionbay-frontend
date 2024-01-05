@@ -1,27 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
-import Input from '../components/ui/Input'
-import { useForm } from 'react-hook-form'
-import axios, { AxiosError } from 'axios'
+import Input, { InputType } from '../components/ui/Input'
+import { Controller } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { LoginUserFields, useLoginForm } from '../hooks/react-hook-form/useLoginForm'
+import axios, { AxiosError } from 'axios'
+import * as API from '../api/Api'
+import { userStorage } from '../stores/userStorage'
 
 const Login: React.FC = () => {
-  const { register, handleSubmit } = useForm()
+  const { handleSubmit, errors, control } = useLoginForm()
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const [togglePassword, setTogglePassword] = useState<InputType>('password')
   
-  const onSubmit = handleSubmit(async (data) => {
+  const showPassword = () => {
+    setTogglePassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
+  };
+  
+  
+  const onSubmit = handleSubmit(async (data: LoginUserFields) => {
     try {
-      const { data: userData } = await axios.post('http://localhost:3000/login', data)
-      login(userData[0], userData[1])
+      const { data: userData } = await API.login(data)
+      userStorage.setUser(userData)
       navigate('/profile')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response.status === 400) {
           // Handle BadRequestException
-          console.log(axiosError.response.data)
+          console.error(axiosError.response.data)
         } else {
           // Handle other errors
           console.error('Unexpected error:', axiosError.message);
@@ -36,21 +43,34 @@ const Login: React.FC = () => {
     <AuthLayout>
       <form onSubmit={onSubmit} >
         <div className="inputs">
-        <Input
-          id="email"
-          type="email"
-          name="email"
-          label="E-mail"
-          placeholder="E-mail"
-          register={register}
-          />
-        <Input
-          id="password"
-          type="password"
-          name="password"
-          label="Password"
-          placeholder="Password"
-          register={register}
+        <Controller
+          control={control}
+          name='email'
+          render={({field}) => (
+            <Input
+              label="E-mail"
+              name='email'
+              control={field}
+              placeholder="E-mail" 
+              errors={errors}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name='password'
+          render={({field}) => (
+            <Input
+              type={togglePassword}
+              label="Password"
+              name='password'
+              placeholder="Password"
+              control={field}
+              errors={errors}
+              isPassword={true}
+              togglePassword={showPassword}
+            />
+          )}
         />
         <button className='button primary' type='submit'>Submit Form</button>
         </div>

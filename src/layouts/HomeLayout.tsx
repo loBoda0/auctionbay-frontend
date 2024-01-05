@@ -1,26 +1,42 @@
-import React, { useEffect } from 'react'
-
-import { PassChildren } from '../interfaces'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Navbar from '../components/ui/Navbar'
-import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { userStorage } from '../stores/userStorage'
+import Modal from '../components/ui/Modal'
+import AddEditAuction from '../components/AddEditAuction'
 
+interface ComponentProps {
+  children: ReactNode;
+}
 
-const HomeLayout: React.FC<PassChildren> = ({children}) => {
-  const { user, token } = useAuth()
+const HomeLayout: React.FC<ComponentProps> = ({children}) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const user = userStorage.getUser()
   const navigate = useNavigate()
   useEffect(() => {
-    if (!user || !token) {
+    if (!user) {
       navigate('/login')
     }
-  }, [user, token, navigate])
+  }, [user, navigate])
   
   return (
     <>
-      <Navbar />
+      <Navbar openModal={openModal} />
       <div className='main-wrapper'>
         {children}
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <AddEditAuction isEdit={false} />
+      </Modal>
     </>
       
   )

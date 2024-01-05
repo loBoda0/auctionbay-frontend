@@ -12,10 +12,15 @@
 
   --color-styles-text-primary: #071015;
   --text-on-color: #FFF;
-  --Gray-50: #272D2D;
-  --Primary-50: #F4FF47;
+  --Gray-10: #EDF4F2;
   --Gray-20: #DDE9E6;
   --Gray-30: #B0BFBD;
+  --Gray-50: #272D2D;
+  --Gray-60: #1C2526;
+  --Gray-70: #131E20;
+  --Primary-50: #F4FF47;
+  --Primary-60: #D0DB33;
+  --Primary-70: #ACB723;
   --Text-Tertiary: #74817F;
 }
 
@@ -29,6 +34,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  line-height: 150%;
 }
 
 a, button, input {
@@ -40,26 +46,13 @@ a, button, input {
 .text-wrapper {
   color: var(--color-styles-text-primary);
   font-weight: 700;
-}
-
-.button {
-  padding: .5rem 1rem;
-  border-radius: 1rem;
-  font-weight: 500;
-  cursor: pointer;
   text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
-.primary {
-  margin-top: 2rem;
-  background: var(--Primary-50);
-  color: var(--color-styles-text-primary);
-}
-
-.secondary {
-  background: var(--Gray-50);
-  color: var(--text-on-color);
-}
+@import './styles/Buttons.scss';
+@import './styles/Modal.scss';
 
 .logo {
   height: 4rem;
@@ -83,7 +76,6 @@ p {
   color: var(--Text-Tertiary);
   text-align: center;
   font-weight: 300;
-  line-height: 150%;
 }
 
 .empty-state {
@@ -99,4 +91,31 @@ p {
   height: 56px;
   object-fit: cover;
   border-radius: 38px;
+  cursor: pointer;
+}
+
+.profile-tabs-wrapper {
+  display: flex;
+  justify-content: center; 
+}
+
+.profile-tabs {
+  display: flex;
+  border-radius: 20px;
+  background: var(--Gray-10);
+  padding: .25rem;
+  gap: .5rem;
+}
+
+.profile-tab {
+  width: 94px;
+  padding: .5rem 1rem;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.profile-tab.active {
+  background-color: var(--Gray-50);
+  color: var(--text-on-color);
 }
