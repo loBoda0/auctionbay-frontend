@@ -9,7 +9,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 import { userStorage } from '../../stores/userStorage'
 
-const Navbar: React.FC = () => {
+interface Props {
+  openModal: () => void
+}
+
+const Navbar: React.FC<Props> = ({openModal}) => {
   const user = userStorage.getUser()
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -38,7 +42,7 @@ const Navbar: React.FC = () => {
         <div className='nav-right'>
           <div className="nav-tabs">
             <button>
-              <img src={CTAButton} alt="add auction" className='button-img' />
+              <img src={CTAButton} alt="add auction" onClick={openModal} className='button-img' />
             </button>
             <button>
               <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={() => userStorage.clearUser()} className='button-img' />

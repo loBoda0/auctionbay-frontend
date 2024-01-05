@@ -5,7 +5,7 @@ import Eye from '/icons/Eye.svg'
 import '../../styles/input.scss'
 
 export type InputSize = 'medium' | 'large'
-export type InputType = 'text' | 'email' | 'password'
+export type InputType = 'text' | 'email' | 'password' | 'date'
 
 export type InputProps = {
   name: string
@@ -21,7 +21,7 @@ export type InputProps = {
   togglePassword?: () => void 
 } 
 
-const controllerInput: React.FC<InputProps> = (
+const Input: React.FC<InputProps> = (
   (
     {
       name,
@@ -59,4 +59,4 @@ const controllerInput: React.FC<InputProps> = (
   }
 )
 
-export default controllerInput
+export default Input

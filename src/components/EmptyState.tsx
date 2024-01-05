@@ -1,7 +1,10 @@
-import React from 'react'
-import { PassChildren } from '../interfaces'
+import React, { ReactNode } from 'react'
 
-const EmptyState: React.FC<PassChildren> = ({children}) => {
+interface ComponentProps {
+  children: ReactNode;
+}
+
+const EmptyState: React.FC<ComponentProps> = ({children}) => {
   return (
     <div className='empty-state'>
       { children }

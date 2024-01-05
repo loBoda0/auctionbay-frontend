@@ -7,7 +7,7 @@ type Props = {
   defaultValues?: Auction
 }
 
-export const CreateUpdateAuction = ({defaultValues}: Props) => {
+export const useAddEditAuction = ({defaultValues}: Props) => {
   const CreateAuctionSchema = Yup.object().shape({
     image: Yup.string(),
     title: Yup.string().required(),

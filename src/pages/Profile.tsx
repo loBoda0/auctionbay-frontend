@@ -1,21 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HomeLayout from '../layouts/HomeLayout'
 import AuctionsContainer from '../containers/AuctionsContainer'
-import { useQuery } from 'react-query'
 import * as API from '../api/Api'
 import { userStorage } from '../stores/userStorage'
 import clsx from 'clsx'
+import { Auction } from '../interfaces/auction'
 
 type Types = 'my' | 'bidding' | 'won'
 
 const Profile: React.FC = () => {
   const user = userStorage.getUser()
   const [type, setType] = useState<Types>('my');
+  const [data, setData] = useState<Auction[]>([])
+  const [isFetching, setIsFetching] = useState(false)
 
-  const { data, isFetching } = useQuery(
-    ['fetchAuctions', type],
-    () => API.fetchAuctionsByUser(type)
-  )
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: receivedData }: {data: Auction[]} = await API.fetchAuctionsByUser(type);
+        console.log('Fetching data', receivedData);
+        setData(receivedData);
+        setIsFetching(false);
+      } catch (error) {
+        // Handle errors here
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [type]);
 
   return (
     <HomeLayout>
@@ -32,7 +45,7 @@ const Profile: React.FC = () => {
       {isFetching ? (
         <h1>Loading...</h1>
       ) : (
-        <AuctionsContainer auctions={data?.data} />
+        <AuctionsContainer auctions={data} />
       )
       }
     </HomeLayout>
