@@ -19,7 +19,7 @@ const Home: React.FC = () => {
         </div>
       </nav>
       <div className="home-wrapper">
-        <div className="hero-text">
+        <div className='home-title'>
           <h1>
             E-auctions made easy!
           </h1>

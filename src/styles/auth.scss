@@ -13,14 +13,17 @@
   }
   .auth-right {
     width: 29.5rem;
-    padding: 0.5rem;
     padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     float: left;
     justify-content: space-between;
     align-items: center;
-  background-color: #fff;
+    background-color: #fff;
+    
+    button {
+      margin-top: 2rem;
+    }
     .auth-footer {
       display: flex;
       gap: 4px;

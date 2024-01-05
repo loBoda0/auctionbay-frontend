@@ -42,6 +42,10 @@ const Login: React.FC = () => {
   return (
     <AuthLayout>
       <form onSubmit={onSubmit} >
+        <div className="auth-title">
+          <h1>Welcome back!</h1>
+          <p>Please enter your details</p>
+        </div>
         <div className="inputs">
         <Controller
           control={control}
