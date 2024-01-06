@@ -23,6 +23,11 @@ const Navbar: React.FC<Props> = ({openModal}) => {
     navigate('/')
   }
 
+  const logOut = () => {
+    userStorage.clearUser()
+    navigate('/')
+  }
+
   return (
     <nav>
       <div className='nav-left'>
@@ -45,7 +50,7 @@ const Navbar: React.FC<Props> = ({openModal}) => {
               <img src={CTAButton} alt="add auction" onClick={openModal} className='button-img' />
             </button>
             <button>
-              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={() => userStorage.clearUser()} className='button-img' />
+              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={logOut} className='button-img' />
             </button>
           </div>
         </div>

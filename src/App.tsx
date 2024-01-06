@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Auctions from './pages/Auctions';
 import Profile from './pages/Profile';
 import Signup from './pages/Register';
+import Auction from './pages/Auction';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <Route path='/signup' element={<Signup />} />
       <Route path='/forgot-password' element={<ForgotPassword />} />
       <Route path='/auctions' element={<Auctions />} />
+      <Route path='/auctions/:id' element={<Auction />} />
       <Route path='/profile' element={<Profile />} />
       </Routes>
     </Router>

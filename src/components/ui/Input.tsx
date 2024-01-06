@@ -1,11 +1,13 @@
 import clsx from 'clsx'
 import React from 'react'
 import Eye from '/icons/Eye.svg'
+import Time from '/icons/Time.svg'
+import Eur from '/icons/Eur.svg'
 
 import '../../styles/input.scss'
 
 export type InputSize = 'medium' | 'large'
-export type InputType = 'text' | 'email' | 'password' | 'date'
+export type InputType = 'text' | 'email' | 'password' | 'date' | 'number' | 'textbox'
 
 export type InputProps = {
   name: string
@@ -17,7 +19,6 @@ export type InputProps = {
   control: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any
-  isPassword?: boolean
   togglePassword?: () => void 
 } 
 
@@ -28,7 +29,6 @@ const Input: React.FC<InputProps> = (
       label,
       type = 'text',
       size = 'large',
-      isPassword = false,
       placeholder,
       control,
       errors,
@@ -41,13 +41,22 @@ const Input: React.FC<InputProps> = (
           {label}
         </label>
         <div className="input">
+        {
+          type === 'textbox' ? <textarea 
+            {...control} 
+            aria-label={label}
+            placeholder={placeholder}
+          /> : 
         <input
           {...control}
           type={type}
           aria-label={label}
           placeholder={placeholder}
         />
-        {isPassword && <img src={Eye} alt="toggle password" onClick={togglePassword} className='pass-toggle' />}
+        }
+        {type === 'password' && <img src={Eye} alt="toggle password" onClick={togglePassword} className='input-img' />}
+        {type === 'number' && <img src={Eur} alt="toggle password" className='input-img' />}
+        {type === 'date' && <img src={Time} alt="toggle password" className='input-img' />}
         </div>
         {errors[name] && (
         <div>

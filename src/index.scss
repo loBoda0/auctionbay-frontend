@@ -37,10 +37,33 @@
   line-height: 150%;
 }
 
-a, button, input {
+a, button, input, textarea {
   all: unset;
   display: inline;
   max-height: 56px;
+}
+
+textarea {
+  width: 100%;
+  height: 9.5rem;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .text-wrapper {
@@ -53,6 +76,7 @@ a, button, input {
 
 @import './styles/Buttons.scss';
 @import './styles/Modal.scss';
+@import './styles/auction.scss';
 
 .logo {
   height: 4rem;
@@ -83,7 +107,9 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
+  gap: 8px;
+  flex: 1 0 0;
+  align-self: stretch; 
 }
 
 .button-img {
@@ -96,7 +122,8 @@ p {
 
 .profile-tabs-wrapper {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .profile-tabs {

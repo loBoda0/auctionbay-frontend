@@ -3,16 +3,16 @@ import HomeLayout from '../layouts/HomeLayout'
 import AuctionsContainer from '../containers/AuctionsContainer'
 import * as API from '../api/Api'
 import { Auction } from '../interfaces/auction'
+import EmptyState from '../components/EmptyState'
 
 const Auctions: React.FC = () => {
   const [data, setData] = useState<Auction[]>([])
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data: receivedData }: {data: Auction[]} = await API.fetchAuctions();
-        console.log('Fetching data', receivedData);
         setData(receivedData);
         setIsFetching(false);
       } catch (error) {
@@ -34,6 +34,7 @@ const Auctions: React.FC = () => {
       {isFetching ? (
         <h1>Loading...</h1>
       ) : (
+        data.length === 0 ? <EmptyState type='auctions'/> :
         <AuctionsContainer auctions={data} />
         )
       }

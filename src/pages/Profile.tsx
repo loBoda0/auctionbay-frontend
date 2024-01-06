@@ -5,6 +5,7 @@ import * as API from '../api/Api'
 import { userStorage } from '../stores/userStorage'
 import clsx from 'clsx'
 import { Auction } from '../interfaces/auction'
+import EmptyState from '../components/EmptyState'
 
 type Types = 'my' | 'bidding' | 'won'
 
@@ -12,13 +13,13 @@ const Profile: React.FC = () => {
   const user = userStorage.getUser()
   const [type, setType] = useState<Types>('my');
   const [data, setData] = useState<Auction[]>([])
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsFetching(true)
       try {
         const { data: receivedData }: {data: Auction[]} = await API.fetchAuctionsByUser(type);
-        console.log('Fetching data', receivedData);
         setData(receivedData);
         setIsFetching(false);
       } catch (error) {
@@ -45,6 +46,7 @@ const Profile: React.FC = () => {
       {isFetching ? (
         <h1>Loading...</h1>
       ) : (
+        data.length === 0 ? <EmptyState type={type}/> :
         <AuctionsContainer auctions={data} />
       )
       }

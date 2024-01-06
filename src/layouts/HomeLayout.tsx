@@ -35,7 +35,7 @@ const HomeLayout: React.FC<ComponentProps> = ({children}) => {
         {children}
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <AddEditAuction isEdit={false} />
+        <AddEditAuction isEdit={false} onClose={closeModal} />
       </Modal>
     </>
       
