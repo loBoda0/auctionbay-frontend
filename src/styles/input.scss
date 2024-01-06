@@ -10,11 +10,11 @@ form {
       flex-direction: column;
       gap: .5rem;
     }
-    .inter {
+    .inner {
       display: flex;
       gap: 1rem;
       .medium {
-        width: calc(50% - 8px);
+        width: 100%;
       }
     }
   }
@@ -22,7 +22,6 @@ form {
 
 .input {
   padding: .5rem 1rem;
-  width: 100%;
   border: 1px solid var(--Gray-20);
   border-radius: 1rem;
   width: auto;
@@ -37,5 +36,12 @@ form {
   }
   input {
     width: 100%;
+  }
+  .input-img {
+    display: flex;
+    filter: invert(60%) grayscale(100%);
+    width: 1.4rem;
+    height: 1.4rem;
+    align-self: center;
   }
 }

@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
           <p>Please enter your details</p>
         </div>
         <div className="inputs">
-          <div className="inter">
+          <div className="inner">
             <Controller
               control={control}
               name='first_name'
@@ -105,7 +105,6 @@ const Signup: React.FC = () => {
               placeholder="Password"
               control={field}
               errors={errors}
-              isPassword={true}
               togglePassword={showPassword}
             />
           )}
@@ -121,12 +120,11 @@ const Signup: React.FC = () => {
               placeholder="Repeat password"
               control={field}
               errors={errors}
-              isPassword={true}
               togglePassword={showConfirmPassword}
             />
           )}
         />
-        <button className='button primary' type='submit'>Submit Form</button>
+        <button className='button primary' type='submit'>Sign up</button>
         </div>
       </form>
     </AuthLayout>

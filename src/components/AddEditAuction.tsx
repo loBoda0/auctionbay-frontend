@@ -1,15 +1,21 @@
-import React, { ChangeEvent, useState } from 'react'
-import { useAddEditAuction } from '../hooks/useAddEditAuction'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { CreateAuctionFields, useAddEditAuction } from '../hooks/useAddEditAuction'
 import Trash from "/icons/Delete.svg";
 import { Controller } from 'react-hook-form';
 import Input from './ui/Input';
+import * as API from '../api/Api'
+import axios, { AxiosError } from 'axios';
+import { Auction } from '../interfaces/auction';
 
 interface Props {
+  key?: string
+  defaultValues?: Auction
   isEdit: boolean
+  onClose: () => void
 }
 
-const AddEditAuction: React.FC<Props> = ({isEdit}) => {
-  const  { handleSubmit, errors, control} = useAddEditAuction({})
+const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues, key}) => {
+  const  { handleSubmit, errors, control} = useAddEditAuction({defaultValues})
   const [file, setFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
@@ -37,12 +43,88 @@ const AddEditAuction: React.FC<Props> = ({isEdit}) => {
     return allowedTypes.includes(file.type);
   };
 
+  const onSubmit = handleSubmit(async (data: CreateAuctionFields) => {
+    if (!isEdit) createAuction(data)
+    else {
+      updateAuction(data)
+    }
+  })
+
+  const createAuction = async (data: CreateAuctionFields) => {
+    try {
+      const {data: auction, status} = await API.postAuction(data)
+      if (status === 201) {
+        if (file !== null && file !== undefined) {
+          const formData = new FormData()
+          formData.append('image', file, file.name);
+
+          await API.auctionUpdateImage(auction.id, formData)
+        }
+      }
+      onClose()
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 400) {
+          // Handle BadRequestException
+          console.error(axiosError.response.data)
+        } else {
+          // Handle other errors
+          console.error('Unexpected error:', axiosError.message);
+        }
+      } else {
+        // Handle non-Axios errors
+        console.error('Non-Axios error:', error);
+      }
+    }
+  }
+
+  const updateAuction = async (data: CreateAuctionFields) => {
+    try {
+      if (key !== null && key !== undefined) {
+        const {data: auction, status} = await API.updateAuction(key, data)
+        console.log(data)
+        if (status === 201) {
+          if (file !== null && file !== undefined && defaultValues?.image !== data.image ) {
+            const formData = new FormData()
+            formData.append('image', file, file.name);
+    
+            await API.auctionUpdateImage(auction.id, formData)
+          }
+        }
+      }
+      onClose()
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 400) {
+          // Handle BadRequestException
+          console.error(axiosError.response.data)
+        } else {
+          // Handle other errors
+          console.error('Unexpected error:', axiosError.message);
+        }
+      } else {
+        // Handle non-Axios errors
+        console.error('Non-Axios error:', error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (defaultValues?.image) {
+      setImagePreview(
+        `http://localhost:3000/public/${defaultValues.image}`
+      );
+    }
+  }, [defaultValues]);
+
   return (
     <>
       <div className="form-title">
         <h4>{title}</h4>
       </div>
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="inputs">
       <div className="modal-image-wrapper">
        <label
@@ -109,52 +191,72 @@ const AddEditAuction: React.FC<Props> = ({isEdit}) => {
             placeholder="Write description here..."
             errors={errors}
             size='medium'
+            type='textbox'
           />
         )}
       />
-      <div className="inter">
-        <Controller
-          control={control}
-          name='starting_price'
-          render={({field}) => (
-            <Input
-              label="Starting price"
+        {
+          isEdit ?  
+          <Controller
+            control={control}
+            name='end_date'
+            render={({field}) => (
+              <Input
+                label="End date"
+                name='end_date'
+                control={field}
+                placeholder="burek"
+                errors={errors}
+                size='medium'
+                type='date'
+              />
+            )}
+          /> : <div className="inner">
+            <Controller
+            control={control}
               name='starting_price'
-              control={field}
-              placeholder="Price"
-              errors={errors}
-              size='medium'
+              render={({field}) => (
+                <Input
+                  label="Starting price"
+                  name='starting_price'
+                  control={field}
+                  placeholder="Price"
+                  errors={errors}
+                  size='medium'
+                  type='number'
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name='end_date'
-          render={({field}) => (
-            <Input 
-              label="End date"
+            <Controller
+              control={control}
               name='end_date'
-              control={field}
-              placeholder="dd.mm.YYYY"
-              errors={errors}
-              size='medium'
+              render={({field}) => (
+                <Input 
+                  label="End date"
+                  name='end_date'
+                  control={field}
+                  placeholder="dd.mm.YYYY"
+                  errors={errors}
+                  size='medium'
+                  type='date'
+                />
+              )}
             />
-          )}
-        />
+          </div>
+        }
       </div>
-      </div>
-    </form>
     <div className="modal-footer">
       { isEdit ? <>
-          <button className='button tertiary'>Discard changes</button>
-          <button className='button secondary'>Edit auction</button>
+          <button className='button tertiary' onClick={onClose}>Discard changes</button>
+          <button className='button secondary' type='submit'>Edit auction</button>
         </>
       : <>
-        <button className='button tertiary'>Cancel</button>
-        <button className='button primary'>Start auction</button>
+        <button className='button tertiary'  onClick={onClose}>Cancel</button>
+        <button className='button primary' type='submit'>Start auction</button>
       </>
       }
     </div>
+    </form>
     </>
   )
 }

@@ -1,26 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Auction } from '../interfaces/auction'
 import '../styles/auctions.scss'
-import EmptyState from '../components/EmptyState'
 import AuctionCard from '../components/AuctionCard'
 
 interface ChildProps {
     auctions: Auction[]
 }
 
-const AuctionsContainer: React.FC<ChildProps> = ({ auctions }) => {
-  if (auctions.length == 0) {
-    return (
-      <EmptyState>
-        <h3>Oh no, no auctions yet!</h3>
-        <p>To add new auction click "+" button in <br /> navigation bar or wait for other users <br /> to add new auction.</p>
-      </EmptyState>
-    )
-  }
+const AuctionsContainer: React.FC<ChildProps> = ({ auctions: initialAuctions }) => {
+  const [auctions, setAuctions] = useState(initialAuctions)
+  
+  const handleRemoveAuction = (auctionId: string) => {
+    // Filter out the auction with the specified ID
+    const updatedAuctions = auctions.filter((auction) => auction.id !== auctionId);
+    // Update the state with the modified array
+    setAuctions(updatedAuctions);
+  };
+
   return (
     <div className='auctions-wrapper'>
       {auctions.map((auction) => (
-        <AuctionCard key={auction.id} auction={auction} />
+        <AuctionCard key={auction.id} auction={auction} removeAuction={handleRemoveAuction} />
       ))}
     </div>
   )

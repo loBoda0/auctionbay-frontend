@@ -1,0 +1,53 @@
+.inner {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  flex-grow: 1;
+  max-height: 100%;
+  .split {
+    flex: 1;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    img {
+      object-fit: contain;
+    }
+
+    .auction-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      color: #000;
+      background-color: #fff;
+      p {
+        color: #000;
+        text-align: left;
+      }
+      .meta-bar {
+        display: flex;
+        justify-content: space-between;
+      }
+      .action-bar {
+        display: flex;
+        justify-content: end;
+        gap: .5rem;
+        .small-input {
+          padding: .5rem 1rem;
+          border: 1px solid var(--Gray-20);
+          border-radius: 1rem;
+          width: 5rem;
+        }
+        label {
+          align-self: center;
+        }
+      }
+    }
+    .biders {
+      flex-grow: 1;
+    }
+  }
+}

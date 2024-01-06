@@ -7,15 +7,29 @@ type Props = {
   defaultValues?: Auction
 }
 
+export interface CreateAuctionFields {
+  id?: string 
+  title: string
+  description: string
+  starting_price: number
+  end_date: string
+  image?: string
+}
+
 export const useAddEditAuction = ({defaultValues}: Props) => {
   const CreateAuctionSchema = Yup.object().shape({
     image: Yup.string(),
     title: Yup.string().required(),
     description: Yup.string().required(),
-    starting_price: Yup.number().required(),
-    end_date: Yup.date().required(),
-  })
+    starting_price: Yup.number().required().min(1),
+    end_date: Yup.string().required().test('is-future-date', 'End date must be in the future', function (value) {
+      const currentDate = new Date();
+      const selectedDate = new Date(value);
 
+      return selectedDate > currentDate;
+    }),
+  })
+  
   const {
     handleSubmit,
     formState: { errors },
@@ -24,6 +38,8 @@ export const useAddEditAuction = ({defaultValues}: Props) => {
     defaultValues: {
       title: '',
       description: '',
+      end_date: '',
+      starting_price: 1,
       ...defaultValues
     },
     mode: 'onSubmit',

@@ -71,12 +71,11 @@ const Login: React.FC = () => {
               placeholder="Password"
               control={field}
               errors={errors}
-              isPassword={true}
               togglePassword={showPassword}
             />
           )}
         />
-        <button className='button primary' type='submit'>Submit Form</button>
+        <button className='button primary' type='submit'>Login</button>
         </div>
       </form>
     </AuthLayout>
