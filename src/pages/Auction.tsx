@@ -8,6 +8,7 @@ import EmptyState from '../components/EmptyState'
 
 const AuctionPage:React.FC = () => {
   const [data, setData] = useState<Auction>()
+  const [bidAmount, setBidAmount] = useState<string>()
   const [isFetching, setIsFetching] = useState(true)
   const { id } = useParams<{ id: string }>()
 
@@ -17,6 +18,7 @@ const AuctionPage:React.FC = () => {
         const { data } = await API.getAuctionById(id);
         console.log(data)
         setData(data);
+        setBidAmount(data.starting_price)
         setIsFetching(false);
       } catch (error) {
         // Handle errors here
@@ -33,6 +35,14 @@ const AuctionPage:React.FC = () => {
       : `url(${NoImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove leading zeros
+    const newValue = e.target.value.replace(/^0+/, '');
+
+    // Update state
+    setBidAmount(newValue);
   };
   
   return (
@@ -52,7 +62,7 @@ const AuctionPage:React.FC = () => {
               <p>{data?.description}</p>
               <form className="action-bar">
                 <label htmlFor="bid">Bid:</label>
-                <input type="number" className='small-input' value={data?.starting_price} min={data?.starting_price} />
+                <input type="number" className='small-input' value={bidAmount} min={bidAmount} onChange={handleInputChange} />
                 <button className='button primary'>Place bid</button>
               </form>
             </div>
