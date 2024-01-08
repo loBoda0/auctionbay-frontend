@@ -85,7 +85,7 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
 
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} key={auction.id}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} >
         <AddEditAuction isEdit={true} onClose={closeModal} defaultValues={auction} />
       </Modal>
     </>

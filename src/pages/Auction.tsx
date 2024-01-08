@@ -15,7 +15,7 @@ const AuctionPage:React.FC = () => {
   const [bids, setBids] = useState<Bid[]>([])
   const [minBid, setMinBid] = useState<number | undefined>(0)
   const { id } = useParams<{ id: string }>()
-  const { handleSubmit, errors, control } = useCreateBid()
+  const { handleSubmit, control } = useCreateBid()
 
   useEffect(() => {
     const fetchData = async () => {
