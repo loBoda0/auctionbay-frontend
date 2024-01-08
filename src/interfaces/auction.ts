@@ -1,3 +1,5 @@
+import { Bid } from "./bid"
+
 export interface Auction {
   id: string
   created_at: Date,
@@ -8,5 +10,5 @@ export interface Auction {
   end_date: string,
   auctioner: string,
   image: string
-  bids: []
+  bids: Bid[]
 }
