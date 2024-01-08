@@ -5,4 +5,5 @@ export enum apiRoutes {
   AUCTIONS = '/auctions',
   MY_AUCTIONS = '/auctions/',
   AUCTIONS_IMAGE = '/auctions/upload/',
+  BIDS = '/bids/'
 }

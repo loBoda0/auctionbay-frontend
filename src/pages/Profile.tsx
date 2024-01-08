@@ -39,7 +39,7 @@ const Profile: React.FC = () => {
       <div className="profile-tabs-wrapper">
         <div className="profile-tabs">
           <button className={clsx('profile-tab', type === 'my' && 'active')} onClick={() => setType('my')}>My Auctions</button>
-          {/* <button className={clsx('profile-tab', type === 'bidding' && 'active')} onClick={() => setType('winning')}>Bidding</button> */}
+          <button className={clsx('profile-tab', type === 'bidding' && 'active')} onClick={() => setType('bidding')}>Bidding</button>
           <button className={clsx('profile-tab', type === 'won' && 'active')} onClick={() => setType('won')}>Won</button>
         </div>
       </div>

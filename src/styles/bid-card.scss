@@ -1,0 +1,29 @@
+.bid-item {
+  display: flex;
+  flex-direction: row;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--Gray-10);
+  gap: 1.5rem;
+  align-items: center;
+  .bidder-data {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: .5rem;
+    align-items: center;
+    img {
+      width: 2rem;
+      height: 2rem;
+      max-width: 2rem;
+      max-height: 2rem;
+    }
+  }
+  .price {
+    display: flex;
+    gap: .25rem;
+    padding: 6px 1rem;
+    background-color: var(--Primary-50);
+    border-radius: 2rem;
+    font-size: 1rem;
+  }
+}
