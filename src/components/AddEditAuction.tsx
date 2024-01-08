@@ -82,7 +82,6 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
     try {
       if (data !== null && data !== undefined) {
         const {data: auction, status} = await API.updateAuction(data.id, data)
-        console.log(data)
         if (status === 201) {
           if (file !== null && file !== undefined && defaultValues?.image !== data.image ) {
             const formData = new FormData()

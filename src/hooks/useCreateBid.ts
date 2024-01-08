@@ -14,7 +14,8 @@ export const useCreateBid = () => {
   const {
     handleSubmit,
     formState: { errors },
-    control
+    control,
+    setValue
   } = useForm<CreateBidFields>({
     defaultValues: {
       bid_amount: 0,
@@ -26,6 +27,7 @@ export const useCreateBid = () => {
   return {
     handleSubmit,
     errors,
-    control
+    control,
+    setValue
   }
 }
