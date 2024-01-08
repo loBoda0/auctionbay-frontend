@@ -12,10 +12,10 @@ import { Bid } from '../interfaces/bid'
 
 const AuctionPage:React.FC = () => {
   const [data, setData] = useState<Auction | null>(null)
+  const [minValue, setminValue] = useState<number>(0)
   const [bids, setBids] = useState<Bid[]>([])
-  const [minBid, setMinBid] = useState<number | undefined>(0)
   const { id } = useParams<{ id: string }>()
-  const { handleSubmit, control } = useCreateBid()
+  const { handleSubmit, control, setValue } = useCreateBid()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,16 +46,16 @@ const AuctionPage:React.FC = () => {
       const highestBid = bids.reduce((maxBid, currentBid) => {
         return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid;
       }, data?.starting_price);
-      setMinBid(highestBid)
+      setValue("bid_amount", highestBid)
+      setminValue(highestBid + 1)
     }
-  }, [bids, data])
+  }, [bids, data, setValue])
   
 
   const onSubmit = handleSubmit(async(data: CreateBidFields) => {
     const { data: newBid } = await API.placeBid(id!, data)
     if (newBid) {
       setBids(prevBids => [...prevBids, newBid])
-
     }
   })
   
@@ -84,8 +84,7 @@ const AuctionPage:React.FC = () => {
                     {...field}
                     type="number"
                     className='small-input'
-                    placeholder={String(minBid + 1)}
-                    min={minBid + 1}
+                    min={minValue}
                   />
                   </>
                 )}
