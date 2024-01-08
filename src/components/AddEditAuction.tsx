@@ -8,13 +8,12 @@ import axios, { AxiosError } from 'axios';
 import { Auction } from '../interfaces/auction';
 
 interface Props {
-  key?: string
   defaultValues?: Auction
   isEdit: boolean
   onClose: () => void
 }
 
-const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues, key}) => {
+const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   const  { handleSubmit, errors, control} = useAddEditAuction({defaultValues})
   const [file, setFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
@@ -81,8 +80,8 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues, key}) 
 
   const updateAuction = async (data: CreateAuctionFields) => {
     try {
-      if (key !== null && key !== undefined) {
-        const {data: auction, status} = await API.updateAuction(key, data)
+      if (data !== null && data !== undefined) {
+        const {data: auction, status} = await API.updateAuction(data.id, data)
         console.log(data)
         if (status === 201) {
           if (file !== null && file !== undefined && defaultValues?.image !== data.image ) {
