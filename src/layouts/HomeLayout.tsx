@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { userStorage } from '../stores/userStorage'
 import Modal from '../components/ui/Modal'
 import AddEditAuction from '../components/AddEditAuction'
+import SettingsLayout from './SettingsLayout'
 
 interface ComponentProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface ComponentProps {
 
 const HomeLayout: React.FC<ComponentProps> = ({children}) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSettingsOpen, seSettingsOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
@@ -18,6 +20,14 @@ const HomeLayout: React.FC<ComponentProps> = ({children}) => {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const openSettings = () => {
+    seSettingsOpen(true);
+  };
+
+  const closeSettings = () => {
+    seSettingsOpen(false);
   };
 
   const user = userStorage.getUser()
@@ -30,12 +40,15 @@ const HomeLayout: React.FC<ComponentProps> = ({children}) => {
   
   return (
     <>
-      <Navbar openModal={openModal} />
+      <Navbar openModal={openModal} openSettings={openSettings} />
       <div className='main-wrapper'>
         {children}
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AddEditAuction isEdit={false} onClose={closeModal} />
+      </Modal>
+      <Modal isOpen={isSettingsOpen} onClose={closeModal}>
+        <SettingsLayout onClose={closeSettings} />
       </Modal>
     </>
       

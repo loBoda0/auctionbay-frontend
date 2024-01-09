@@ -14,9 +14,10 @@ import Settings from '/icons/Settings.svg'
 
 interface Props {
   openModal: () => void
+  openSettings: () => void
 }
 
-const Navbar: React.FC<Props> = ({openModal}) => {
+const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const [toggleMenu, setToggleMenu] = useState(false)
@@ -27,7 +28,7 @@ const Navbar: React.FC<Props> = ({openModal}) => {
 
   function handleClickOutside(event: MouseEvent) {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-      openMenu();
+      handleOpenMenu();
     }
   }
   useEffect(() => {
@@ -46,7 +47,7 @@ const Navbar: React.FC<Props> = ({openModal}) => {
     navigate('/')
   }
 
-  const openMenu = () => {
+  const handleOpenMenu = () => {
     setToggleMenu((prevValue) => !prevValue)
   }
 
@@ -72,11 +73,11 @@ const Navbar: React.FC<Props> = ({openModal}) => {
               <img src={CTAButton} alt="add auction" onClick={openModal} className='button-img' />
             </button>
             <button>
-              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={openMenu} className='button-img' />
+              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={handleOpenMenu} className='button-img' />
             </button>
             {
-              toggleMenu && <div className='menu'  ref={wrapperRef}>
-                <button className='button'><img src={Settings} alt="settings" />Profile settings</button>
+              toggleMenu && <div className='menu'  ref={wrapperRef} onClick={handleOpenMenu}>
+                <button className='button' onClick={openSettings}><img src={Settings} alt="settings" />Profile settings</button>
                 <button onClick={logOut} className='button tertiary'>Log out</button>
               </div>
             }
