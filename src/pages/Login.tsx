@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
 import Input, { InputType } from '../components/ui/Input'
 import { Controller } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LoginUserFields, useLoginForm } from '../hooks/react-hook-form/useLoginForm'
 import axios, { AxiosError } from 'axios'
 import * as API from '../api/Api'
@@ -75,6 +75,7 @@ const Login: React.FC = () => {
             />
           )}
         />
+        <Link to={'/forgot-password'} className='forgot-password'>Forgot password?</Link>
         <button className='button primary' type='submit'>Login</button>
         </div>
       </form>
