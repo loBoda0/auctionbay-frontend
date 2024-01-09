@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { MouseEventHandler, useCallback, useEffect, useState } from 'react'
 import { Auction } from '../interfaces/auction'
 import { userStorage } from '../stores/userStorage'
 import NoImage from '/no-image.svg'
@@ -20,7 +20,7 @@ interface AuctionProps {
 
 const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(getRemaining());
+  const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const user = userStorage.getUser()
   const navigate = useNavigate()
   let biddigState = {
@@ -53,16 +53,16 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
     setModalOpen(false);
   };
   
-  function getRemaining() {
-    const currentDate = new Date()
-    const endDate = new Date(auction.end_date)
-    const timeDiff = endDate.getTime() - currentDate.getTime()
-    return Math.max(0, timeDiff)
-  }
+  const getRemaining = useCallback(() => {
+    const currentDate = new Date();
+    const endDate = new Date(auction.end_date);
+    const timeDiff = endDate.getTime() - currentDate.getTime();
+    return Math.max(0, timeDiff);
+  }, [auction.end_date]);
   
   useEffect(() => {    
     setTimeRemaining(getRemaining())
-  }, [])
+  }, [getRemaining])
   
   const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
