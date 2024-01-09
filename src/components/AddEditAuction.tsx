@@ -45,7 +45,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   const onSubmit = handleSubmit(async (data: CreateAuctionFields) => {
     if (!isEdit) createAuction(data)
     else {
-      updateAuction(data)
+      updateAuction(data as Auction)
     }
   })
 
@@ -61,6 +61,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
         }
       }
       onClose()
+      window.location.reload()
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
@@ -78,9 +79,9 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
     }
   }
 
-  const updateAuction = async (data: CreateAuctionFields) => {
+  const updateAuction = async (data: Auction) => {
     try {
-      if (data !== null && data !== undefined) {
+      if (data) {
         const {data: auction, status} = await API.updateAuction(data.id, data)
         if (status === 201) {
           if (file !== null && file !== undefined && defaultValues?.image !== data.image ) {
@@ -92,6 +93,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
         }
       }
       onClose()
+      window.location.reload();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;

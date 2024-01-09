@@ -15,7 +15,7 @@ import clsx from 'clsx'
 import { userStorage } from '../stores/userStorage'
 
 const AuctionPage:React.FC = () => {
-  const [data, setData] = useState<Auction | null>(null)
+  const [auction, setAuction] = useState<Auction | null>(null)
   const [minValue, setMinValue] = useState<number>(0)
   const [bids, setBids] = useState<Bid[]>([])
   const [errorMessage, setErrorMessage] = useState<string>()
@@ -29,14 +29,13 @@ const AuctionPage:React.FC = () => {
     text: 'In progress'
   }
 
-  if(data?.winner.id === user?.id)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+  if(auction?.winner && auction?.winner.id === user?.id)
     biddigState = {
       style: 'winning',
       text: 'Winning'
     }
   else {
-    data?.bids.forEach(bid => {
+    auction?.bids.forEach(bid => {
       if (bid.bidder.id === user?.id) {
         biddigState = {
           style: 'danger',
@@ -54,7 +53,7 @@ const AuctionPage:React.FC = () => {
           setErrorMessage(data.message)
         }
         else {
-          setData(data)
+          setAuction(data)
           setBids(data.bids)
           setTimeRemaining(getRemaining(data))
         }
@@ -71,7 +70,6 @@ const AuctionPage:React.FC = () => {
   function getRemaining(data: Auction) {
     const currentDate = new Date()
     const endDate = new Date(data?.end_date)
-    console.log(endDate)
     const timeDiff = endDate.getTime() - currentDate.getTime()
     return timeDiff
   }
@@ -81,8 +79,8 @@ const AuctionPage:React.FC = () => {
   const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
   const backgroundImageStyle = {
-    backgroundImage: data?.image
-      ? `url(http://localhost:3000/public/${data.image})`
+    backgroundImage: auction?.image
+      ? `url(http://localhost:3000/public/${auction.image})`
       : `url(${NoImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -93,17 +91,21 @@ const AuctionPage:React.FC = () => {
       return
     }
     setBids(bids)
-    if (data) {
+    if (auction) {
       const highestBid = bids.reduce((maxBid, currentBid) => {
         return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid;
-      }, data?.starting_price);
+      }, auction?.starting_price);
       setValue("bid_amount", highestBid)
       setMinValue(highestBid + 1)
     }
-  }, [bids, data, setValue])
+  }, [bids, auction, setValue])
   
 
   const onSubmit = handleSubmit(async(data: CreateBidFields) => {
+    if (auction?.auctioner.id === user?.id) {
+      alert("That's your auction, you idiot!")
+      return
+    }
     const { data: newBid } = await API.placeBid(id!, data)
     if (newBid) {
       setBids(prevBids => [...prevBids, newBid])
@@ -116,7 +118,7 @@ const AuctionPage:React.FC = () => {
         errorMessage && <p>{errorMessage}</p>
       }
       {
-        data && bids ? <div className="inner">
+        auction && bids ? <div className="inner">
         <div className="split" style={backgroundImageStyle}>
         </div>
         <div className="split">
@@ -142,8 +144,8 @@ const AuctionPage:React.FC = () => {
                 </div>
             }
             </div>
-            <h1>{data?.title}</h1>
-            <p>{data?.description}</p>
+            <h1>{auction?.title}</h1>
+            <p>{auction?.description}</p>
             <form className="action-bar" onSubmit={onSubmit}>
               <Controller
                 control={control}
@@ -164,9 +166,9 @@ const AuctionPage:React.FC = () => {
             </form>
           </div>
           <div className="auction-content biders">
-            <h1>Bidding history({data.bids.length})</h1>
+            <h1>Bidding history({bids.length})</h1>
             {
-              data.bids.length === 0 ? <EmptyState type='bidders' /> :
+              bids.length === 0 ? <EmptyState type='bidders' /> :
               <BidsContainer bids={bids} />
             }
           </div>
