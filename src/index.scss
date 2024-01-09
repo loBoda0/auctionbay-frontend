@@ -18,6 +18,7 @@
   --Gray-50: #272D2D;
   --Gray-60: #1C2526;
   --Gray-70: #131E20;
+  --Primary-30: #F9FF90;
   --Primary-50: #F4FF47;
   --Primary-60: #D0DB33;
   --Primary-70: #ACB723;
@@ -74,10 +75,6 @@ input[type=number] {
   cursor: pointer;
 }
 
-@import './styles/Buttons.scss';
-@import './styles/Modal.scss';
-@import './styles/auction.scss';
-
 .logo {
   height: 4rem;
   width: 4rem;
@@ -97,10 +94,16 @@ h3 {
 }
 
 p {
-  color: var(--Text-Tertiary);
+  color: var(--color-styles-text-primary);
   text-align: center;
   font-weight: 300;
+  display: inline;
 }
+
+@import './styles/Buttons.scss';
+@import './styles/Modal.scss';
+@import './styles/auction.scss';
+@import './styles/auction-meta.scss';
 
 .empty-state {
   display: flex;

@@ -3,26 +3,61 @@ import { Auction } from '../interfaces/auction'
 import * as API from '../api/Api'
 import { useParams } from 'react-router-dom'
 import HomeLayout from '../layouts/HomeLayout'
-import NoImage from '/no-image.svg'
 import EmptyState from '../components/EmptyState'
 import BidsContainer from '../containers/BidsContainer'
 import { CreateBidFields, useCreateBid } from '../hooks/useCreateBid'
 import { Controller } from 'react-hook-form'
 import { Bid } from '../interfaces/bid'
 
+import NoImage from '/no-image.svg'
+import Time from '/icons/Time.svg'
+import clsx from 'clsx'
+import { userStorage } from '../stores/userStorage'
+
 const AuctionPage:React.FC = () => {
   const [data, setData] = useState<Auction | null>(null)
-  const [minValue, setminValue] = useState<number>(0)
+  const [minValue, setMinValue] = useState<number>(0)
   const [bids, setBids] = useState<Bid[]>([])
+  const [errorMessage, setErrorMessage] = useState<string>()
   const { id } = useParams<{ id: string }>()
   const { handleSubmit, control, setValue } = useCreateBid()
+  const user = userStorage.getUser()
+
+  const [timeRemaining, setTimeRemaining] = useState<number>(0);
+  let biddigState = {
+    style: 'in-progress',
+    text: 'In progress'
+  }
+
+  if(data?.winner.id === user?.id)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    biddigState = {
+      style: 'winning',
+      text: 'Winning'
+    }
+  else {
+    data?.bids.forEach(bid => {
+      if (bid.bidder.id === user?.id) {
+        biddigState = {
+          style: 'danger',
+          text: 'Outbid'
+        }
+      }
+    })
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await API.getAuctionById(id);
-        setData(data)
-        setBids(data.bids)
+        if (data.error) {
+          setErrorMessage(data.message)
+        }
+        else {
+          setData(data)
+          setBids(data.bids)
+          setTimeRemaining(getRemaining(data))
+        }
       } catch (error) {
         // Handle errors here
         console.error('Error fetching data:', error);
@@ -31,6 +66,19 @@ const AuctionPage:React.FC = () => {
   
     fetchData();
   }, [id])
+
+    
+  function getRemaining(data: Auction) {
+    const currentDate = new Date()
+    const endDate = new Date(data?.end_date)
+    console.log(endDate)
+    const timeDiff = endDate.getTime() - currentDate.getTime()
+    return timeDiff
+  }
+  
+  
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
   const backgroundImageStyle = {
     backgroundImage: data?.image
@@ -41,13 +89,16 @@ const AuctionPage:React.FC = () => {
   }
 
   useEffect(() => {
+    if (!bids) {
+      return
+    }
     setBids(bids)
     if (data) {
       const highestBid = bids.reduce((maxBid, currentBid) => {
         return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid;
       }, data?.starting_price);
       setValue("bid_amount", highestBid)
-      setminValue(highestBid + 1)
+      setMinValue(highestBid + 1)
     }
   }, [bids, data, setValue])
   
@@ -62,14 +113,34 @@ const AuctionPage:React.FC = () => {
   return (
     <HomeLayout>
       {
+        errorMessage && <p>{errorMessage}</p>
+      }
+      {
         data && bids ? <div className="inner">
         <div className="split" style={backgroundImageStyle}>
         </div>
         <div className="split">
           <div className="auction-content">
             <div className="meta-bar">
-              <div className="status">In Progress</div>
-              <div className="status">24 h</div>
+            {
+              timeRemaining !== 0 ?
+              <div className={clsx("tag", biddigState.style)}>
+                <p>{biddigState.text}</p>
+              </div> : <div className="tag done">
+                <p>Done</p>
+              </div> 
+            }
+            {
+              timeRemaining !== 0 && days ? 
+                <div className="tag">
+                  <p>{days} days</p>
+                  <img src={Time} alt="time" />
+                </div> 
+              : <div className="tag danger">
+                  <p>{hours}h</p>
+                  <img src={Time} alt="time" />
+                </div>
+            }
             </div>
             <h1>{data?.title}</h1>
             <p>{data?.description}</p>
@@ -100,7 +171,7 @@ const AuctionPage:React.FC = () => {
             }
           </div>
         </div>
-      </div> : <h1>Loading...</h1>
+      </div> : !errorMessage && <h1>Loading...</h1>
       }
     </HomeLayout>
   )
