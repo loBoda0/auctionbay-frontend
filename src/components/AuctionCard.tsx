@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { Auction } from '../interfaces/auction'
 import { userStorage } from '../stores/userStorage'
 import NoImage from '/no-image.svg'
@@ -11,6 +11,7 @@ import clsx from 'clsx'
 import Modal from './ui/Modal'
 import AddEditAuction from './AddEditAuction'
 import { useNavigate } from 'react-router-dom'
+import Time from '/icons/Time.svg'
 
 interface AuctionProps {
   auction: Auction
@@ -19,7 +20,30 @@ interface AuctionProps {
 
 const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState<number>(getRemaining());
+  const user = userStorage.getUser()
   const navigate = useNavigate()
+  let biddigState = {
+    style: 'in-progress',
+    text: 'In progress'
+  }
+
+  if(auction.winner && auction.winner.id === user?.id)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    biddigState = {
+      style: 'winning',
+      text: 'Winning'
+    }
+  else {
+    auction.bids.forEach(bid => {
+      if (bid.bidder.id === user?.id) {
+        biddigState = {
+          style: 'danger',
+          text: 'Outbid'
+        }
+      }
+    })
+  }
 
   const openModal = () => {
     setModalOpen(true);
@@ -28,11 +52,20 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  const user = userStorage.getUser() 
   
-  const currentDate = new Date()
-  const auctionStatus = new Date(auction.end_date) >= currentDate
+  function getRemaining() {
+    const currentDate = new Date()
+    const endDate = new Date(auction.end_date)
+    const timeDiff = endDate.getTime() - currentDate.getTime()
+    return Math.max(0, timeDiff)
+  }
+  
+  useEffect(() => {    
+    setTimeRemaining(getRemaining())
+  }, [])
+  
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
   const auctionImg = `http://localhost:3000/public/${auction.image}`
 
@@ -51,15 +84,27 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
 
   return (
     <>
-      <div className={clsx('auction-card', auction.auctioner === user?.id ? 'is-editable' : null)} onClick={() => navigate(`/auctions/${auction.id}`)}>
+      <div className={clsx('auction-card', auction.auctioner.id === user?.id ? 'is-editable' : null)} onClick={() => navigate(`/auctions/${auction.id}`)}>
         <div className="auction-header">
           <div className="auction-info">
-            {auctionStatus ? 
-              <>
-                <p>In Progress</p>
-                <p>24h</p>
-              </>
-              : <p>Done</p>
+            {
+              timeRemaining !== 0 ?
+              <div className={clsx("tag-s", biddigState.style)}>
+                <p>{biddigState.text}</p>
+              </div> : <div className="tag-s done">
+                <p>Done</p>
+              </div> 
+            }
+            {
+              timeRemaining !== 0 && days ? 
+                <div className="tag-s">
+                  <p>{days} days</p>
+                  <img src={Time} alt="time" />
+                </div> 
+              : <div className="tag-s danger">
+                  <p>{hours}h</p>
+                  <img src={Time} alt="time" />
+                </div>
             }
           </div>
           <div className="auction-title">
@@ -71,7 +116,7 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
         </div>
         <div className="auction-body">
           <img src={auction.image ? auctionImg : NoImage} alt="" />
-          {auction.auctioner == user?.id ? 
+          {auction.auctioner.id == user?.id ? 
             <div className="auction-edit"  onClick={stopPropagation}>
               <button className='button tertiary' onClick={onDelete} >
                 <img src={Trash} alt="Delete" />

@@ -1,0 +1,42 @@
+.tag {
+  padding: 2px 8px;
+  border-radius: 1rem;
+  display: flex;
+  gap: .25rem;
+  align-items: center;
+  img {
+    height: 1.25rem;
+    width: 1.25rem;
+    filter: hue-rotate(180deg);
+  }
+}
+.tag-s {
+  padding: 2px 4px;
+  border-radius: .5rem;
+  font-size: 10px;
+  line-height: 12px;
+  display: flex;
+  gap: .25rem;
+  align-items: center;
+  img {
+    height: .625rem;
+    width: .625rem;
+    filter: hue-rotate(180deg);
+  }
+}
+.done {
+  background-color: var(--Gray-50);
+  color: var(--text-on-color);
+}
+.in-progress {
+  background-color: var(--Primary-30);
+  color: var(--color-styles-text-primary);
+}
+.danger {
+  background-color: #FFAA98;
+  color: var(--color-styles-text-primary);
+}
+.winning {
+  background-color: #ADFF90;;
+  color: var(--color-styles-text-primary);
+}
