@@ -47,7 +47,7 @@ const HomeLayout: React.FC<ComponentProps> = ({children}) => {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AddEditAuction isEdit={false} onClose={closeModal} />
       </Modal>
-      <Modal isOpen={isSettingsOpen} onClose={closeModal}>
+      <Modal isOpen={isSettingsOpen} onClose={closeSettings}>
         <SettingsLayout onClose={closeSettings} />
       </Modal>
     </>

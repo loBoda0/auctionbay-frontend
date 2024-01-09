@@ -114,7 +114,7 @@ const Signup: React.FC = () => {
           name='confirm_password'
           render={({field}) => (
             <Input
-              type={toggleConfirmPassword 	}
+              type={toggleConfirmPassword}
               label="Repeat password"
               name='repeat_password'
               placeholder="Repeat password"

@@ -54,7 +54,7 @@ const Input: React.FC<InputProps> = (
           placeholder={placeholder}
         />
         }
-        {type === 'password' && <img src={Eye} alt="toggle password" onClick={togglePassword} className='input-img' />}
+        {togglePassword && <img src={Eye} alt="toggle password" onClick={togglePassword} className='input-img' />}
         {type === 'number' && <img src={Eur} alt="toggle password" className='input-img' />}
         {type === 'date' && <img src={Time} alt="toggle password" className='input-img' />}
         </div>

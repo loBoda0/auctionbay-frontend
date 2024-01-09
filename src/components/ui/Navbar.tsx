@@ -36,7 +36,7 @@ const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
 
   if (!user) {
     navigate('/')
