@@ -8,16 +8,34 @@ import '../../styles/navigation.scss'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 import { userStorage } from '../../stores/userStorage'
+import { useEffect, useRef, useState } from 'react'
+
+import Settings from '/icons/Settings.svg'
 
 interface Props {
   openModal: () => void
 }
 
 const Navbar: React.FC<Props> = ({openModal}) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  const [toggleMenu, setToggleMenu] = useState(false)
   const user = userStorage.getUser()
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const avatarImg = `http://localhost:3000/public/${user?.avatar}`
+
+  function handleClickOutside(event: MouseEvent) {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      openMenu();
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!user) {
     navigate('/')
@@ -26,6 +44,10 @@ const Navbar: React.FC<Props> = ({openModal}) => {
   const logOut = () => {
     userStorage.clearUser()
     navigate('/')
+  }
+
+  const openMenu = () => {
+    setToggleMenu((prevValue) => !prevValue)
   }
 
   return (
@@ -50,8 +72,14 @@ const Navbar: React.FC<Props> = ({openModal}) => {
               <img src={CTAButton} alt="add auction" onClick={openModal} className='button-img' />
             </button>
             <button>
-              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={logOut} className='button-img' />
+              <img src={user?.avatar ? avatarImg : Avatar} alt="avatar" onClick={openMenu} className='button-img' />
             </button>
+            {
+              toggleMenu && <div className='menu'  ref={wrapperRef}>
+                <button className='button'><img src={Settings} alt="settings" />Profile settings</button>
+                <button onClick={logOut} className='button tertiary'>Log out</button>
+              </div>
+            }
           </div>
         </div>
     </nav>
