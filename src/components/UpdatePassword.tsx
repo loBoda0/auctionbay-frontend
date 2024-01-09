@@ -7,7 +7,7 @@ interface Props {
   onClose: () => void
 }
 
-const UpdatePassword = ({onClose}: Props) => {
+const UpdatePassword: React.FC<Props> = ({onClose}) => {
   const [togglePassword, setTogglePassword] = useState<InputType>('password')
   const [toggleNewPassword, setToggleNewPassword] = useState<InputType>('password')
   const [toggleConfirmPassword, setToggleConfirmPassword] = useState<InputType>('password')
