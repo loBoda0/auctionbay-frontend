@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void
 }
 
-const EditUser = ({defaultValues, changeForm, onClose}: Props) => {
+const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
   const { handleSubmit, errors, control } = useUpdateUser({defaultValues})
 
   const onSubmit = handleSubmit(async (data) => {
