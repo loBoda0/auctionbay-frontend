@@ -75,7 +75,9 @@ const Login: React.FC = () => {
             />
           )}
         />
-        <Link to={'/forgot-password'} className='forgot-password'>Forgot password?</Link>
+        <div className="forgot-password">
+        <Link to={'/forgot-password'} >Forgot password?</Link>
+        </div>
         <button className='button primary' type='submit'>Login</button>
         </div>
       </form>
