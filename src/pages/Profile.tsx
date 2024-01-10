@@ -12,7 +12,7 @@ type Types = 'my' | 'bidding' | 'won'
 const Profile: React.FC = () => {
   const user = userStorage.getUser()
   const [type, setType] = useState<Types>('my');
-  const [data, setData] = useState<Auction[]>([])
+  const [auctions, setAuctions] = useState<Auction[]>([])
   const [isFetching, setIsFetching] = useState(true)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Profile: React.FC = () => {
       setIsFetching(true)
       try {
         const { data: receivedData }: {data: Auction[]} = await API.fetchAuctionsByUser(type);
-        setData(receivedData);
+        setAuctions(receivedData);
         setIsFetching(false);
       } catch (error) {
         // Handle errors here
@@ -46,8 +46,8 @@ const Profile: React.FC = () => {
       {isFetching ? (
         <h1>Loading...</h1>
       ) : (
-        data.length === 0 ? <EmptyState type={type}/> :
-        <AuctionsContainer auctions={data} />
+        auctions.length === 0 ? <EmptyState type={type}/> :
+        <AuctionsContainer auctions={auctions} />
       )
       }
     </HomeLayout>

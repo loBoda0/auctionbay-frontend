@@ -6,15 +6,13 @@ import { Auction } from '../interfaces/auction'
 import EmptyState from '../components/EmptyState'
 
 const Auctions: React.FC = () => {
-  const [data, setData] = useState<Auction[]>([])
-  const [isFetching, setIsFetching] = useState(true)
+  const [auctions, setAuctions] = useState<Auction[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: receivedData }: {data: Auction[]} = await API.fetchAuctions();
-        setData(receivedData);
-        setIsFetching(false);
+        const { data }: { data: Auction[] } = await API.fetchAuctions()
+        setAuctions(data);
       } catch (error) {
         // Handle errors here
         console.error('Error fetching data:', error);
@@ -31,11 +29,11 @@ const Auctions: React.FC = () => {
       <div className='title'>
         <h1>Auctions</h1>
       </div>
-      {isFetching ? (
+      {!auctions ? (
         <h1>Loading...</h1>
       ) : (
-        data.length === 0 ? <EmptyState type='auctions'/> :
-        <AuctionsContainer auctions={data} />
+        auctions.length === 0 ? <EmptyState type='auctions'/> :
+        <AuctionsContainer auctions={auctions} />
         )
       }
     </HomeLayout>

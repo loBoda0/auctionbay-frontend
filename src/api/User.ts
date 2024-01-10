@@ -16,3 +16,7 @@ export const register = async (data: RegisterUserFields) => {
 export const updateUser = async (id: string, data: UpdateUserFields | UpdatePasswordFields) => {
   return apiRequest("patch", apiRoutes.UPDATE_USER + id, data)
 }
+
+export const refreshToken = async () => {
+  return apiRequest("get", apiRoutes.REFRESH_TOKEN)
+}
