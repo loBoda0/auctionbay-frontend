@@ -96,12 +96,12 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
               </div> 
             }
             {
-              timeRemaining !== 0 && days ? 
+              days ? 
                 <div className="tag-s">
                   <p>{days} days</p>
                   <img src={Time} alt="time" />
                 </div> 
-              : <div className="tag-s danger">
+              : timeRemaining !== 0 && <div className="tag-s danger">
                   <p>{hours}h</p>
                   <img src={Time} alt="time" />
                 </div>

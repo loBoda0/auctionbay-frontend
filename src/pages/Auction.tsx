@@ -71,7 +71,7 @@ const AuctionPage:React.FC = () => {
     const currentDate = new Date()
     const endDate = new Date(data?.end_date)
     const timeDiff = endDate.getTime() - currentDate.getTime()
-    return timeDiff
+    return Math.max(0, timeDiff);
   }
   
   
@@ -129,16 +129,16 @@ const AuctionPage:React.FC = () => {
               <div className={clsx("tag", biddigState.style)}>
                 <p>{biddigState.text}</p>
               </div> : <div className="tag done">
-                <p>Done</p>
+                Done
               </div> 
             }
             {
-              timeRemaining !== 0 && days ? 
+              days ? 
                 <div className="tag">
                   <p>{days} days</p>
                   <img src={Time} alt="time" />
                 </div> 
-              : <div className="tag danger">
+              : timeRemaining !== 0 && <div className="tag danger">
                   <p>{hours}h</p>
                   <img src={Time} alt="time" />
                 </div>
