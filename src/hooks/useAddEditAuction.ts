@@ -39,7 +39,6 @@ export const useAddEditAuction = ({defaultValues}: Props) => {
       title: '',
       description: '',
       end_date: '',
-      starting_price: 1,
       ...defaultValues
     },
     mode: 'onSubmit',
