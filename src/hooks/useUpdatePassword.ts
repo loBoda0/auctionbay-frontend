@@ -16,8 +16,8 @@ export const useUpdatePassword = () =>{
         'Password must have at least one number, lower or upper case letter and it has to be longer than 5 characters.',
       ) */
       .required(),
-    new_password: Yup.string() ,
-    confirm_password: Yup.string()
+    new_password: Yup.string().required(),
+    confirm_password: Yup.string().required()
       .oneOf([Yup.ref('new_password')], 'Passwords do not match')
       .required('Passwords do not match'),
   })

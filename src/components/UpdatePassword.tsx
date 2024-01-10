@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useUpdatePassword } from '../hooks/useUpdatePassword'
 import { Controller } from 'react-hook-form'
 import Input, {InputType} from './ui/Input'
+import * as API from '../api/Api'
 
 interface Props {
+  userId: string
   onClose: () => void
 }
 
-const UpdatePassword: React.FC<Props> = ({onClose}) => {
+const UpdatePassword: React.FC<Props> = ({userId, onClose}) => {
   const [togglePassword, setTogglePassword] = useState<InputType>('password')
   const [toggleNewPassword, setToggleNewPassword] = useState<InputType>('password')
   const [toggleConfirmPassword, setToggleConfirmPassword] = useState<InputType>('password')
@@ -26,7 +28,19 @@ const UpdatePassword: React.FC<Props> = ({onClose}) => {
   }
   
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data)
+    try {
+      const { data: resData } = await API.updateUser(userId, data)
+      console.log(resData)
+      if (resData.error) {
+        // TODO: display error message to user
+        console.log(resData.error)
+      }
+      else {
+        alert('Password updated successfully')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   })
 
   return (

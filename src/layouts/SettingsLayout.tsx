@@ -24,7 +24,7 @@ const SettingsLayout: React.FC<Props> = ({onClose}) => {
         activeForm === 'user' && user && <EditUser defaultValues={user} onClose={onClose} changeForm={handleChangeForm} />
       }
       {
-        activeForm === 'password' && user && <UpdatePassword onClose={onClose} />
+        activeForm === 'password' && user && <UpdatePassword userId={user.id} onClose={onClose} />
       }
     </div>
   )

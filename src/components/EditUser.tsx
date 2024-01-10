@@ -4,6 +4,8 @@ import { User } from '../interfaces/user'
 import { Controller } from 'react-hook-form'
 import Input from './ui/Input'
 import { Forms } from '../layouts/SettingsLayout'
+import * as API from '../api/Api'
+import { userStorage } from '../stores/userStorage'
 
 interface Props {
   defaultValues: User
@@ -15,7 +17,18 @@ const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
   const { handleSubmit, errors, control } = useUpdateUser({defaultValues})
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data)
+    try {
+      const { data: userData , error} = await API.updateUser(defaultValues.id, data)
+      if (error) {
+        console.log(error)
+      }
+      else {
+        userStorage.setUser(userData)
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error)
+    }
   })
 
   const setPassForm = () => {

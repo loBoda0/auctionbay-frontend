@@ -21,8 +21,15 @@ const Login: React.FC = () => {
   const onSubmit = handleSubmit(async (data: LoginUserFields) => {
     try {
       const { data: userData } = await API.login(data)
-      userStorage.setUser(userData)
-      navigate('/profile')
+      if (!userData.error) {
+        userStorage.setUser(userData)
+        navigate('/profile')
+      }
+      else {
+
+        // TODO: handle not found user
+        alert("Invalid credentials")
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
