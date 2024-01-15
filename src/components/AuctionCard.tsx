@@ -84,7 +84,7 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
 
   return (
     <>
-      <div className={clsx('auction-card', auction.auctioner.id === user?.id ? 'is-editable' : null)} onClick={() => navigate(`/auctions/${auction.id}`)}>
+      <div className={clsx('auction-card', timeRemaining !== 0 && auction.auctioner.id === user?.id ? 'is-editable' : null)} onClick={() => navigate(`/auctions/${auction.id}`)}>
         <div className="auction-header">
           <div className="auction-info">
             {
@@ -115,8 +115,8 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
           </div>
         </div>
         <div className="auction-body">
-          <img src={auction.image ? auctionImg : NoImage} alt="" />
-          {auction.auctioner.id == user?.id ? 
+          <img src={auction.image ? auctionImg : NoImage} alt="" className='auction-img' />
+          {timeRemaining !== 0 && auction.auctioner.id == user?.id ? 
             <div className="auction-edit"  onClick={stopPropagation}>
               <button className='button tertiary' onClick={onDelete} >
                 <img src={Trash} alt="Delete" />

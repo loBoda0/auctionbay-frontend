@@ -17,9 +17,15 @@ const AuctionsContainer: React.FC<ChildProps> = ({ auctions: initialAuctions }) 
     setAuctions(updatedAuctions);
   };
 
+  const sortedAuctions = auctions.slice().sort((a, b) => {
+    const dateA = new Date(a.end_date).getTime();
+    const dateB = new Date(b.end_date).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <div className='auctions-wrapper'>
-      {auctions.map((auction) => (
+      {sortedAuctions.map((auction) => (
         <AuctionCard key={auction.id} auction={auction} removeAuction={handleRemoveAuction} />
       ))}
     </div>

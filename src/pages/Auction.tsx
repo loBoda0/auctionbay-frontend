@@ -74,7 +74,6 @@ const AuctionPage:React.FC = () => {
     return Math.max(0, timeDiff);
   }
   
-  
   const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
   const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
@@ -100,6 +99,9 @@ const AuctionPage:React.FC = () => {
     }
   }, [bids, auction, setValue])
   
+  const getHighestBidder = () =>{
+    return bids.reduce((highestAuctioner, currentAuctioner) => (currentAuctioner.bid_amount > highestAuctioner.bid_amount ? `${currentAuctioner.bidder.first_name} + ${currentAuctioner.bidder.last_name}` : highestAuctioner), `${bids[0].bidder.first_name} ${bids[0].bidder.last_name}`)
+  }
 
   const onSubmit = handleSubmit(async(data: CreateBidFields) => {
     if (auction?.auctioner.id === user?.id) {
@@ -146,6 +148,8 @@ const AuctionPage:React.FC = () => {
             </div>
             <h1>{auction?.title}</h1>
             <p>{auction?.description}</p>
+            {
+              timeRemaining !== 0 ? 
             <form className="action-bar" onSubmit={onSubmit}>
               <Controller
                 control={control}
@@ -163,7 +167,9 @@ const AuctionPage:React.FC = () => {
                 )}
               />
               <button className='button primary'>Place bid</button>
-            </form>
+            </form> : 
+            <p>The winner is {getHighestBidder()}</p>
+            }
           </div>
           <div className="auction-content biders">
             <h1>Bidding history({bids.length})</h1>
