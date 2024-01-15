@@ -100,7 +100,8 @@ const AuctionPage:React.FC = () => {
   }, [bids, auction, setValue])
   
   const getHighestBidder = () =>{
-    return bids.reduce((highestAuctioner, currentAuctioner) => (currentAuctioner.bid_amount > highestAuctioner.bid_amount ? `${currentAuctioner.bidder.first_name} + ${currentAuctioner.bidder.last_name}` : highestAuctioner), `${bids[0].bidder.first_name} ${bids[0].bidder.last_name}`)
+    const maxBid = bids.reduce((max, current) => (current.bid_amount > max.bid_amount ? current : max), bids[0])
+    return `${maxBid.bidder.first_name} ${maxBid.bidder.last_name}`
   }
 
   const onSubmit = handleSubmit(async(data: CreateBidFields) => {
