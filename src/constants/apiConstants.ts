@@ -1,6 +1,7 @@
 export enum apiRoutes {
   LOGIN = '/login',
-  SIGNUP = '/register',
+  SIGNUP = '/signup',
+  FORGOT_PASSWORD = '/forgot-password',
   UPDATE_USER = '/me/',
   UPLOAD_AVATAR_IMAGE = '/me/upload',
   AUCTIONS = '/auctions',

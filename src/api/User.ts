@@ -1,5 +1,6 @@
 import { apiRoutes } from "../constants/apiConstants"
 import { LoginUserFields } from "../hooks/react-hook-form/useLoginForm"
+import { NewPasswordFields } from "../hooks/react-hook-form/useNewPassword"
 import { RegisterUserFields } from "../hooks/react-hook-form/useRegisterForm"
 import { UpdatePasswordFields } from "../hooks/useUpdatePassword"
 import { UpdateUserFields } from "../hooks/useUpdateUser"
@@ -19,4 +20,12 @@ export const updateUser = async (id: string, data: UpdateUserFields | UpdatePass
 
 export const refreshToken = async () => {
   return apiRequest("get", apiRoutes.REFRESH_TOKEN)
+}
+
+export const forgottenPassword = async (data: { email: string }) => {
+  return apiRequest("post", apiRoutes.FORGOT_PASSWORD, data)
+}
+
+export const setNewPassword = async (id: string | undefined, data: NewPasswordFields) => {
+  return apiRequest("post", apiRoutes.FORGOT_PASSWORD + '/' + id, data)
 }

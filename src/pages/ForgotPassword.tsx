@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
+import * as API from '../api/Api'
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -8,7 +9,10 @@ const ForgotPassword: React.FC = () => {
     e.preventDefault()
 
     // TOTO: Handle reset password 
-    console.log(email)
+    const data = {
+      email
+    }
+    API.forgottenPassword(data)
   }
   return (
     <AuthLayout>
@@ -25,7 +29,7 @@ const ForgotPassword: React.FC = () => {
               <input
                 id="email"
                 type="email"
-                placeholder="Placeholder"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 />

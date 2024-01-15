@@ -7,6 +7,7 @@ import Auctions from './pages/Auctions';
 import Profile from './pages/Profile';
 import Signup from './pages/Register';
 import Auction from './pages/Auction';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
       <Route path='/auctions' element={<Auctions />} />
       <Route path='/auctions/:id' element={<Auction />} />
       <Route path='/profile' element={<Profile />} />
+      <Route path='/reset-password/:id' element={<ResetPassword />} />
       </Routes>
     </Router>
   )
