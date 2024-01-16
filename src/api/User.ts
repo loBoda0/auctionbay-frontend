@@ -18,6 +18,10 @@ export const updateUser = async (id: string, data: UpdateUserFields | UpdatePass
   return apiRequest("patch", apiRoutes.UPDATE_USER + id, data)
 }
 
+export const updateAvatar = async (data: FormData) => {
+  return apiRequest("post", apiRoutes.UPLOAD_AVATAR_IMAGE, data)
+}
+
 export const refreshToken = async () => {
   return apiRequest("get", apiRoutes.REFRESH_TOKEN)
 }

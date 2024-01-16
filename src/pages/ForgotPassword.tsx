@@ -14,6 +14,7 @@ const ForgotPassword: React.FC = () => {
     }
     API.forgottenPassword(data)
   }
+  
   return (
     <AuthLayout>
         

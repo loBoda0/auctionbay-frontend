@@ -36,7 +36,14 @@ const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
     changeForm('password');
   }
 
+  const setAvatarForm = () => {
+    // Call the changeForm function with the argument 'password'
+    changeForm('avatar');
+  }
+
   return (
+    <>
+    <h3 className="mb-2">Profile settings</h3>
     <form onSubmit={onSubmit} >
         <div className="inputs">
           <div className="inner">
@@ -83,12 +90,14 @@ const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
           )}
         />
         <button onClick={setPassForm}>Change password</button>
-        <div className="modal-footer">
+        <button onClick={setAvatarForm}>Change profile picture</button>
+        <div className="modal-footer mt-2">
           <button className='button tertiary' onClick={onClose}>Cancel</button>
           <button className='button primary' type='submit'>Save changes</button>
         </div>
         </div>
       </form>
+      </>
   )
 }
 

@@ -80,6 +80,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   }
 
   const updateAuction = async (data: Auction) => {
+    console.log('Updating auction')
     try {
       if (data) {
         const {data: auction, status} = await API.updateAuction(data.id, data)
@@ -245,17 +246,17 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
           </div>
         }
       </div>
-    <div className="modal-footer">
-      { isEdit ? <>
-          <button className='button tertiary' onClick={onClose}>Discard changes</button>
-          <button className='button secondary' type='submit'>Edit auction</button>
+      <div className="modal-footer">
+        { isEdit ? <>
+            <button className='button tertiary' onClick={onClose}>Discard changes</button>
+            <button className='button secondary' type='submit'>Edit auction</button>
+          </>
+        : <>
+          <button className='button tertiary'  onClick={onClose}>Cancel</button>
+          <button className='button primary' type='submit'>Start auction</button>
         </>
-      : <>
-        <button className='button tertiary'  onClick={onClose}>Cancel</button>
-        <button className='button primary' type='submit'>Start auction</button>
-      </>
-      }
-    </div>
+        }
+      </div>
     </form>
     </>
   )

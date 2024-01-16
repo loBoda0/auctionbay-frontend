@@ -44,57 +44,62 @@ const UpdatePassword: React.FC<Props> = ({userId, onClose}) => {
   })
 
   return (
-    <form onSubmit={onSubmit} >
-        <Controller
-          control={control}
-          name='password'
-          render={({field}) => (
-            <Input
-              type={togglePassword}
-              label="Password"
-              name='password'
-              placeholder="Password"
-              control={field}
-              errors={errors}
-              togglePassword={showPassword}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name='new_password'
-          render={({field}) => (
-            <Input
-              type={toggleNewPassword}
-              label="Password"
-              name='password'
-              placeholder="Password"
-              control={field}
-              errors={errors}
-              togglePassword={showNewPassword}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name='confirm_password'
-          render={({field}) => (
-            <Input
-              type={toggleConfirmPassword}
-              label="Repeat password"
-              name='repeat_password'
-              placeholder="Repeat password"
-              control={field}
-              errors={errors}
-              togglePassword={showConfirmPassword}
-            />
-          )}
-        />
-        <div className="modal-footer">
+    <>
+      <h3 className="mb-2">Change password</h3>
+      <form onSubmit={onSubmit} >
+        <div className="inputs">
+          <Controller
+            control={control}
+            name='password'
+            render={({field}) => (
+              <Input
+                type={togglePassword}
+                label="Password"
+                name='password'
+                placeholder="Password"
+                control={field}
+                errors={errors}
+                togglePassword={showPassword}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name='new_password'
+            render={({field}) => (
+              <Input
+                type={toggleNewPassword}
+                label="Password"
+                name='password'
+                placeholder="Password"
+                control={field}
+                errors={errors}
+                togglePassword={showNewPassword}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name='confirm_password'
+            render={({field}) => (
+              <Input
+                type={toggleConfirmPassword}
+                label="Repeat password"
+                name='repeat_password'
+                placeholder="Repeat password"
+                control={field}
+                errors={errors}
+                togglePassword={showConfirmPassword}
+              />
+            )}
+          />
+        </div>
+        <div className="modal-footer mt-2">
           <button className='button tertiary' onClick={onClose}>Cancel</button>
           <button className='button primary' type='submit'>Save changes</button>
         </div>
       </form>
+      </>
   )
 }
 

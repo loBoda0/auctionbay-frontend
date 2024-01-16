@@ -79,3 +79,14 @@
 .hidden {
   display: none;
 }
+
+.update-avatar {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  img {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+  }
+}
