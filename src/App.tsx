@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import ForgotPassword from './pages/ForgotPassword';
-import Auctions from './pages/Auctions';
-import Profile from './pages/Profile';
-import Signup from './pages/Register';
-import Auction from './pages/Auction';
-import ResetPassword from './pages/ResetPassword';
+import Home from './pages/Home'
+import Login from './pages/Login'
+import ForgotPassword from './pages/ForgotPassword'
+import Auctions from './pages/Auctions'
+import Profile from './pages/Profile'
+import Signup from './pages/Register'
+import Auction from './pages/Auction'
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
 

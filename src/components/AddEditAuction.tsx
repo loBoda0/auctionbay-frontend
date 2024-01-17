@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { CreateAuctionFields, useAddEditAuction } from '../hooks/useAddEditAuction'
-import Trash from "/icons/Delete.svg";
-import { Controller } from 'react-hook-form';
-import Input from './ui/Input';
+import Trash from "/icons/Delete.svg"
+import { Controller } from 'react-hook-form'
+import Input from './ui/Input'
 import * as API from '../api/Api'
-import axios, { AxiosError } from 'axios';
-import { Auction } from '../interfaces/auction';
+import axios, { AxiosError } from 'axios'
+import { Auction } from '../interfaces/auction'
 
 interface Props {
   defaultValues?: Auction
@@ -18,29 +18,29 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   const [file, setFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
-  const title = isEdit ? 'Edit Auction' : 'Add Auction';
+  const title = isEdit ? 'Edit Auction' : 'Add Auction'
   
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     event.stopPropagation()
     const { target } = event
     if (target.files && target.files.length > 0) {
-      const myfile = target.files[0];
+      const myfile = target.files[0]
       if(!isFileTypeValid(myfile)) return
-      setFile(myfile);
+      setFile(myfile)
       // set image preview
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(myfile);
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(myfile)
     }
-  };
+  }
 
   const isFileTypeValid = (file: File) => {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    return allowedTypes.includes(file.type);
-  };
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png']
+    return allowedTypes.includes(file.type)
+  }
 
   const onSubmit = handleSubmit(async (data: CreateAuctionFields) => {
     if (!isEdit) createAuction(data)
@@ -55,7 +55,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
       if (status === 201) {
         if (file !== null && file !== undefined) {
           const formData = new FormData()
-          formData.append('image', file, file.name);
+          formData.append('image', file, file.name)
 
           await API.auctionUpdateImage(auction.id, formData)
         }
@@ -64,17 +64,17 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
       window.location.reload()
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError
         if (axiosError.response && axiosError.response.status === 400) {
           // Handle BadRequestException
           console.error(axiosError.response.data)
         } else {
           // Handle other errors
-          console.error('Unexpected error:', axiosError.message);
+          console.error('Unexpected error:', axiosError.message)
         }
       } else {
         // Handle non-Axios errors
-        console.error('Non-Axios error:', error);
+        console.error('Non-Axios error:', error)
       }
     }
   }
@@ -87,27 +87,27 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
         if (status === 200) {
           if (file) {
             const formData = new FormData()
-            formData.append('image', file, file.name);
+            formData.append('image', file, file.name)
     
             await API.auctionUpdateImage(auction.id, formData)
           }
         }
       }
       onClose()
-      window.location.reload();
+      window.location.reload()
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError
         if (axiosError.response && axiosError.response.status === 400) {
           // Handle BadRequestException
           console.error(axiosError.response.data)
         } else {
           // Handle other errors
-          console.error('Unexpected error:', axiosError.message);
+          console.error('Unexpected error:', axiosError.message)
         }
       } else {
         // Handle non-Axios errors
-        console.error('Non-Axios error:', error);
+        console.error('Non-Axios error:', error)
       }
     }
   }
@@ -116,9 +116,9 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
     if (defaultValues?.image) {
       setImagePreview(
         `http://localhost:3000/public/${defaultValues.image}`
-      );
+      )
     }
-  }, [defaultValues]);
+  }, [defaultValues])
 
   return (
     <>
@@ -144,8 +144,8 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
                 <div
                   className="button secondary remove-image"
                   onClick={() => {
-                    setImagePreview(null);
-                    setFile(null);
+                    setImagePreview(null)
+                    setFile(null)
                   }}>
                   <img src={Trash} />
                 </div>

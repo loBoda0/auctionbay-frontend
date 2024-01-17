@@ -19,21 +19,21 @@ const UpdateAvatar: React.FC<Props> = ({user, onClose}) => {
     event.stopPropagation()
     const { target } = event
     if (target.files && target.files.length > 0) {
-      const myfile = target.files[0];
+      const myfile = target.files[0]
       if(!isFileTypeValid(myfile)) return
-      setFile(myfile);
+      setFile(myfile)
       // set image preview
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(myfile);
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(myfile)
     }
   }
 
   const isFileTypeValid = (file: File) => {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    return allowedTypes.includes(file.type);
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png']
+    return allowedTypes.includes(file.type)
   }
 
   const handleSubmit = async(e: React.FormEvent) => {

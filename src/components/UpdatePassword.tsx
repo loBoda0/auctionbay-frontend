@@ -17,11 +17,11 @@ const UpdatePassword: React.FC<Props> = ({userId, onClose}) => {
 
   const showPassword = () => {
     setTogglePassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
-  };
+  }
 
   const showNewPassword = () => {
     setToggleNewPassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
-  };
+  }
 
   const showConfirmPassword = () => {
     setToggleConfirmPassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))

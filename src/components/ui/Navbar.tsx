@@ -18,7 +18,7 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
 
   const [toggleMenu, setToggleMenu] = useState(false)
   const user = userStorage.getUser()
@@ -28,15 +28,15 @@ const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
 
   function handleClickOutside(event: MouseEvent) {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-      handleOpenMenu();
+      handleOpenMenu()
     }
   }
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  })
 
   if (!user) {
     navigate('/')

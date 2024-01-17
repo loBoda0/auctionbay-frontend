@@ -1,6 +1,6 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useForm } from "react-hook-form"
+import * as Yup from "yup"
 
 export interface CreateBidFields {
   bid_amount: number

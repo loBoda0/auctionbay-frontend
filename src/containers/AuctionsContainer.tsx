@@ -12,16 +12,16 @@ const AuctionsContainer: React.FC<ChildProps> = ({ auctions: initialAuctions }) 
   
   const handleRemoveAuction = (auctionId: string) => {
     // Filter out the auction with the specified ID
-    const updatedAuctions = auctions.filter((auction) => auction.id !== auctionId);
+    const updatedAuctions = auctions.filter((auction) => auction.id !== auctionId)
     // Update the state with the modified array
-    setAuctions(updatedAuctions);
-  };
+    setAuctions(updatedAuctions)
+  }
 
   const sortedAuctions = auctions.slice().sort((a, b) => {
-    const dateA = new Date(a.end_date).getTime();
-    const dateB = new Date(b.end_date).getTime();
-    return dateB - dateA;
-  });
+    const dateA = new Date(a.end_date).getTime()
+    const dateB = new Date(b.end_date).getTime()
+    return dateB - dateA
+  })
 
   return (
     <div className='auctions-wrapper'>

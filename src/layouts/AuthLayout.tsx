@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { ReactNode } from 'react'
 
 interface ComponentProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const AuthLayout: React.FC<ComponentProps> = ({children}) => {

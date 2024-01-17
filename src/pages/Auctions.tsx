@@ -12,15 +12,15 @@ const Auctions: React.FC = () => {
     const fetchData = async () => {
       try {
         const { data }: { data: Auction[] } = await API.fetchAuctions()
-        setAuctions(data);
+        setAuctions(data)
       } catch (error) {
         // Handle errors here
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
-    };
+    }
   
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   
   
 

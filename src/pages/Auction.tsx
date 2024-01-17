@@ -23,7 +23,7 @@ const AuctionPage:React.FC = () => {
   const { handleSubmit, control, setValue } = useCreateBid()
   const user = userStorage.getUser()
 
-  const [timeRemaining, setTimeRemaining] = useState<number>(0);
+  const [timeRemaining, setTimeRemaining] = useState<number>(0)
   let biddigState = {
     style: 'in-progress',
     text: 'In progress'
@@ -48,7 +48,7 @@ const AuctionPage:React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await API.getAuctionById(id);
+        const { data } = await API.getAuctionById(id)
         if (data.error) {
           setErrorMessage(data.message)
         }
@@ -59,11 +59,11 @@ const AuctionPage:React.FC = () => {
         }
       } catch (error) {
         // Handle errors here
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
-    };
+    }
   
-    fetchData();
+    fetchData()
   }, [id])
 
     
@@ -71,11 +71,11 @@ const AuctionPage:React.FC = () => {
     const currentDate = new Date()
     const endDate = new Date(data?.end_date)
     const timeDiff = endDate.getTime() - currentDate.getTime()
-    return Math.max(0, timeDiff);
+    return Math.max(0, timeDiff)
   }
   
-  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
 
   const backgroundImageStyle = {
     backgroundImage: auction?.image
@@ -92,8 +92,8 @@ const AuctionPage:React.FC = () => {
     setBids(bids)
     if (auction) {
       const highestBid = bids.reduce((maxBid, currentBid) => {
-        return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid;
-      }, auction?.starting_price);
+        return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid
+      }, auction?.starting_price)
       setValue("bid_amount", highestBid)
       setMinValue(highestBid + 1)
     }

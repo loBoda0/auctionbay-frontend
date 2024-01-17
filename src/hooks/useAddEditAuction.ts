@@ -23,10 +23,10 @@ export const useAddEditAuction = ({defaultValues}: Props) => {
     description: Yup.string().required(),
     starting_price: Yup.number().required().min(1),
     end_date: Yup.string().required().test('is-future-date', 'End date must be in the future', function (value) {
-      const currentDate = new Date();
-      const selectedDate = new Date(value);
+      const currentDate = new Date()
+      const selectedDate = new Date(value)
 
-      return selectedDate > currentDate;
+      return selectedDate > currentDate
     }),
   })
   

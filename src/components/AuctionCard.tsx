@@ -19,8 +19,8 @@ interface AuctionProps {
 }
 
 const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState<number>(0);
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [timeRemaining, setTimeRemaining] = useState<number>(0)
   const user = userStorage.getUser()
   const navigate = useNavigate()
   let biddigState = {
@@ -46,26 +46,26 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   }
 
   const openModal = () => {
-    setModalOpen(true);
-  };
+    setModalOpen(true)
+  }
 
   const closeModal = () => {
-    setModalOpen(false);
-  };
+    setModalOpen(false)
+  }
   
   const getRemaining = useCallback(() => {
-    const currentDate = new Date();
-    const endDate = new Date(auction.end_date);
-    const timeDiff = endDate.getTime() - currentDate.getTime();
-    return Math.max(0, timeDiff);
-  }, [auction.end_date]);
+    const currentDate = new Date()
+    const endDate = new Date(auction.end_date)
+    const timeDiff = endDate.getTime() - currentDate.getTime()
+    return Math.max(0, timeDiff)
+  }, [auction.end_date])
   
   useEffect(() => {    
     setTimeRemaining(getRemaining())
   }, [getRemaining])
   
-  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
 
   const auctionImg = `http://localhost:3000/public/${auction.image}`
 
@@ -79,8 +79,8 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   }
 
   const stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
-  };
+    e.stopPropagation()
+  }
 
   return (
     <>

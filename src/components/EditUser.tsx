@@ -33,12 +33,12 @@ const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
 
   const setPassForm = () => {
     // Call the changeForm function with the argument 'password'
-    changeForm('password');
+    changeForm('password')
   }
 
   const setAvatarForm = () => {
     // Call the changeForm function with the argument 'password'
-    changeForm('avatar');
+    changeForm('avatar')
   }
 
   return (

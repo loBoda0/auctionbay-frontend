@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
-import { refreshToken } from "./User";
+import { refreshToken } from "./User"
 
-const instance = Axios.create();
+const instance = Axios.create()
 
 instance.interceptors.response.use(
   (response) => {
@@ -9,28 +9,27 @@ instance.interceptors.response.use(
     return response
   },
   async (error) => {
-    console.error(error);
+    console.error(error)
 
-    const originalRequest = error.config;
+    const originalRequest = error.config
 
     if (error.response.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true
 
       try {
-        const { data } = await refreshToken();
-        console.log(data);
+        const { data } = await refreshToken()
 
         if (data) {
-          document.cookie = `access_token${data}; path=/`;
-          return instance(originalRequest);
+          document.cookie = `access_token${data} path=/`
+          return instance(originalRequest)
         }
       } catch (refreshError) {
-        console.error(refreshError);
+        console.error(refreshError)
         // Handle the error that occurred during token refresh if needed
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
 )
 

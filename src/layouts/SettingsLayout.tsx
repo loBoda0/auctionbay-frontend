@@ -16,7 +16,7 @@ const SettingsLayout: React.FC<Props> = ({onClose}) => {
 
   const handleChangeForm = (newForm: Forms) => {
     setActiveForm(newForm)
-  };
+  }
 
   return (
     <div>

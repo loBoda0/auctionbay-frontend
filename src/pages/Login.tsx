@@ -15,7 +15,7 @@ const Login: React.FC = () => {
   
   const showPassword = () => {
     setTogglePassword((prevToggle) => (prevToggle === 'password' ? 'text' : 'password'))
-  };
+  }
   
   
   const onSubmit = handleSubmit(async (data: LoginUserFields) => {
@@ -32,17 +32,17 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as AxiosError
         if (axiosError.response && axiosError.response.status === 400) {
           // Handle BadRequestException
           console.error(axiosError.response.data)
         } else {
           // Handle other errors
-          console.error('Unexpected error:', axiosError.message);
+          console.error('Unexpected error:', axiosError.message)
         }
       } else {
         // Handle non-Axios errors
-        console.error('Non-Axios error:', error);
+        console.error('Non-Axios error:', error)
       }
     }
   })

@@ -7,28 +7,28 @@ import AddEditAuction from '../components/AddEditAuction'
 import SettingsLayout from './SettingsLayout'
 
 interface ComponentProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const HomeLayout: React.FC<ComponentProps> = ({children}) => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isSettingsOpen, seSettingsOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [isSettingsOpen, seSettingsOpen] = useState(false)
 
   const openModal = () => {
-    setModalOpen(true);
-  };
+    setModalOpen(true)
+  }
 
   const closeModal = () => {
-    setModalOpen(false);
-  };
+    setModalOpen(false)
+  }
 
   const openSettings = () => {
-    seSettingsOpen(true);
-  };
+    seSettingsOpen(true)
+  }
 
   const closeSettings = () => {
-    seSettingsOpen(false);
-  };
+    seSettingsOpen(false)
+  }
 
   const user = userStorage.getUser()
   const navigate = useNavigate()
