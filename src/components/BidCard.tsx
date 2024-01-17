@@ -33,7 +33,7 @@ const BidCard: React.FC<Props> = ({bid}) => {
     setFormattedDate(formattedDate)
   }, [bid.created_at])
 
-  const bidderImg = `http://localhost:3000/public/${bid.bidder.avatar}`
+  const bidderImg = `${import.meta.env.VITE_REACT_APP_IMAGES}${bid.bidder.avatar}`
 
   return (
     <div className='bid-item'>

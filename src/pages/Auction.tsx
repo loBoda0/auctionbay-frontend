@@ -79,7 +79,7 @@ const AuctionPage:React.FC = () => {
 
   const backgroundImageStyle = {
     backgroundImage: auction?.image
-      ? `url(http://localhost:3000/public/${auction.image})`
+      ? `url(${import.meta.env.VITE_REACT_APP_IMAGES}${auction.image})`
       : `url(${NoImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',

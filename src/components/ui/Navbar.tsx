@@ -24,7 +24,7 @@ const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
   const user = userStorage.getUser()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const avatarImg = `http://localhost:3000/public/${user?.avatar}`
+  const avatarImg = `${import.meta.env.VITE_REACT_APP_IMAGES}${user?.avatar}`
 
   function handleClickOutside(event: MouseEvent) {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {

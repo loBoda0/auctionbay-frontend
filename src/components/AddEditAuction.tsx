@@ -115,7 +115,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   useEffect(() => {
     if (defaultValues?.image) {
       setImagePreview(
-        `http://localhost:3000/public/${defaultValues.image}`
+        `${import.meta.env.VITE_REACT_APP_IMAGES}${defaultValues.image}`
       )
     }
   }, [defaultValues])

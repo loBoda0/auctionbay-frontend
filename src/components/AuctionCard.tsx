@@ -67,7 +67,7 @@ const AuctionCard: React.FC<AuctionProps> = ({auction, removeAuction}) => {
   const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24))
   const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
 
-  const auctionImg = `http://localhost:3000/public/${auction.image}`
+  const auctionImg = `${import.meta.env.VITE_REACT_APP_IMAGES}${auction.image}`
 
   const onDelete = async () => {
     try {
