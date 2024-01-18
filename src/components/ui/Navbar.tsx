@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 import { userStorage } from '../../stores/userStorage'
 import { useEffect, useRef, useState } from 'react'
+import * as API from '../../api/Api'
 
 import Settings from '/icons/Settings.svg'
 
@@ -44,6 +45,7 @@ const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
 
   const logOut = () => {
     userStorage.clearUser()
+    API.logout()
     navigate('/')
   }
 

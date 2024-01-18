@@ -14,6 +14,10 @@ export const register = async (data: RegisterUserFields) => {
   apiRequest("post", apiRoutes.SIGNUP, data)
 }
 
+export const logout = async () => {
+  apiRequest("post", apiRoutes.SIGNUP)
+}
+
 export const updateUser = async (id: string, data: UpdateUserFields | UpdatePasswordFields) => {
   return apiRequest("patch", apiRoutes.UPDATE_USER + id, data)
 }
