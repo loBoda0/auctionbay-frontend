@@ -86,15 +86,17 @@ const AuctionPage:React.FC = () => {
   }
 
   useEffect(() => {
-    if (!bids) {
-      return
-    }
-    setBids(bids)
     if (auction) {
+      if (!bids || bids.length === 0) {
+        console.log(auction.starting_price)
+        setValue("bid_amount", auction.starting_price)
+        setMinValue(auction.starting_price)
+        return
+      }
       const highestBid = bids.reduce((maxBid, currentBid) => {
         return currentBid.bid_amount > maxBid ? currentBid.bid_amount : maxBid
       }, auction?.starting_price)
-      setValue("bid_amount", highestBid)
+      setValue("bid_amount", highestBid + 1)
       setMinValue(highestBid + 1)
     }
   }, [bids, auction, setValue])
