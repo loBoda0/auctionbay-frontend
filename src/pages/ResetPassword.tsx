@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
 import Input, { InputType } from '../components/ui/Input'
 import { Controller } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NewPasswordFields, useNewPassword } from '../hooks/react-hook-form/useNewPassword'
 import * as API from '../api/Api'
 import axios, { AxiosError } from 'axios'
@@ -10,7 +10,7 @@ import axios, { AxiosError } from 'axios'
 const ResetPassword: React.FC = () => {
   const { handleSubmit, errors, control } = useNewPassword()
   const { id } = useParams()
-  console.log(id)
+  const navigate = useNavigate()
 
   const [togglePassword, setTogglePassword] = useState<InputType>('password')
   const [toggleConfirmPassword, setToggleConfirmPassword] = useState<InputType>('password')
@@ -27,7 +27,7 @@ const ResetPassword: React.FC = () => {
     console.log(data)
     try {
       await API.setNewPassword(id, data)
-      /* navigate('/login') */
+      navigate('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError

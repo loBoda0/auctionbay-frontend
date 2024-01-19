@@ -27,7 +27,6 @@ const Login: React.FC = () => {
         navigate('/profile')
       }
       else {
-        // TODO: handle not found user
         alert("Invalid credentials")
       }
     } catch (error) {

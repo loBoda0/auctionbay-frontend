@@ -8,7 +8,6 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault()
 
-    // TOTO: Handle reset password 
     const data = {
       email
     }
