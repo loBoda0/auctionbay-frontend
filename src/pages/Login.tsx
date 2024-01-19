@@ -21,7 +21,6 @@ const Login: React.FC = () => {
   const onSubmit = handleSubmit(async (data: LoginUserFields) => {
     try {
       const { data: userData } = await API.login(data)
-      console.log(userData)
       if (!userData.error) {
         userStorage.setUser(userData)
         navigate('/profile')

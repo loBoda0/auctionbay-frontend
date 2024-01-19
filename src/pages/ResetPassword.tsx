@@ -24,7 +24,6 @@ const ResetPassword: React.FC = () => {
   }
 
   const onSubmit = handleSubmit(async (data: NewPasswordFields) => {
-    console.log(data)
     try {
       await API.setNewPassword(id, data)
       navigate('/login')

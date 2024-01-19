@@ -30,7 +30,6 @@ const UpdatePassword: React.FC<Props> = ({userId, onClose}) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const { data: resData } = await API.updateUser(userId, data)
-      console.log(resData)
       if (resData.error) {
         // TODO: display error message to user
         console.log(resData.error)

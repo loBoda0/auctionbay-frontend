@@ -88,7 +88,6 @@ const AuctionPage:React.FC = () => {
   useEffect(() => {
     if (auction) {
       if (!bids || bids.length === 0) {
-        console.log(auction.starting_price)
         setValue("bid_amount", auction.starting_price)
         setMinValue(auction.starting_price)
         return

@@ -40,12 +40,10 @@ const UpdateAvatar: React.FC<Props> = ({user, onClose}) => {
     e.preventDefault()
 
     if (file) {
-      console.log('object')
       const formData = new FormData()
       formData.append('avatar', file, file.name)
       const data = await API.updateAvatar(formData)
       userStorage.setUser(data.data)
-      console.log(data)
       onClose()
     }
   }

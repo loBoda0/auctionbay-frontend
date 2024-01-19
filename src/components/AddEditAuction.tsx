@@ -80,7 +80,6 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   }
 
   const updateAuction = async (data: Auction) => {
-    console.log('Updating auction')
     try {
       if (data) {
         const {data: auction, status} = await API.updateAuction(data.id, data)
