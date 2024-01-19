@@ -19,7 +19,6 @@ const Login: React.FC = () => {
   
   
   const onSubmit = handleSubmit(async (data: LoginUserFields) => {
-    console.log(data)
     try {
       const { data: userData } = await API.login(data)
       console.log(userData)
