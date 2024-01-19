@@ -22,12 +22,12 @@ const Login: React.FC = () => {
     console.log(data)
     try {
       const { data: userData } = await API.login(data)
+      console.log(userData)
       if (!userData.error) {
         userStorage.setUser(userData)
         navigate('/profile')
       }
       else {
-
         // TODO: handle not found user
         alert("Invalid credentials")
       }
