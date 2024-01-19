@@ -42,6 +42,7 @@ export async function apiRequest<D = Record<string, unknown>, R = unknown>(
   } & AxiosRequestConfig,
 ) {
   try {
+    console.log(import.meta.env.VITE_REACT_APP_API_URL)
     const response = await Axios.request<R>({
       baseURL: import.meta.env.VITE_REACT_APP_API_URL,
       url: path,
