@@ -1,36 +1,51 @@
-import Axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
-import { refreshToken } from "./User"
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
+import * as API from '../api/Api'
 
-const instance = Axios.create()
-/* I will make it work one day 😊 */
-instance.interceptors.response.use(
+// Default instance
+const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_REACT_APP_API_URL,
+  timeout: 10000,
+  headers: {
+      Authorization: undefined,
+      'Content-Type': 'application/json',
+  },
+})
+
+axiosInstance.interceptors.request.use(
+  async (config) => {
+      return config
+  },
+  (error) => {
+      return {
+          error: error,
+      }
+  },
+)
+
+axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(response.data)
     return response
   },
   async (error) => {
-    console.error(error)
-
-    const originalRequest = error.config
-
-    if (error.response.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true
-
+    const originalConfig = error.config
+    if (error?.response && error?.response?.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true
       try {
-        const { data } = await refreshToken()
-
-        if (data) {
-          document.cookie = `access_token${data} path=/`
-          return instance(originalRequest)
-        }
-      } catch (refreshError) {
-        console.error(refreshError)
-        // Handle the error that occurred during token refresh if needed
+        await API.refreshToken()
+        return axiosInstance(originalConfig)
+      } catch (error) {
+        return Promise.reject(error)
       }
     }
+    if (error?.response?.status === 401) {
+      return Promise.reject(error.response.data)
+    }
+    if (error?.response?.data) {
+        return Promise.reject(error.response.data)
+    }
 
-    return Promise.reject(error)
-  }
+      return Promise.reject(error)
+  },
 )
 
 export async function apiRequest<D = Record<string, unknown>, R = unknown>(
@@ -41,23 +56,18 @@ export async function apiRequest<D = Record<string, unknown>, R = unknown>(
     headers?: AxiosRequestHeaders
   } & AxiosRequestConfig,
 ) {
-  try {
-    const response = await Axios.request<R>({
-      baseURL: import.meta.env.VITE_REACT_APP_API_URL,
-      url: path,
-      method: method,
-      data: input,
-      headers: {
+  const response = await axiosInstance.request<R>({
+    baseURL: import.meta.env.VITE_REACT_APP_API_URL,
+    url: path,
+    method: method,
+    data: input,
+    headers: {
         ...options?.headers,
       },
       withCredentials: true
     })
     return response
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    console.log(error)
-    return error.response
-  }
+   
 }
 
 export * from './User'
