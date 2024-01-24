@@ -8,11 +8,11 @@ export const fetchAuctions = async () => {
 }
 
 export const getAuctionById = async (id: string | undefined) => {
-  return apiRequest("get", apiRoutes.MY_AUCTIONS + id)
+  return apiRequest<string, Auction>("get", apiRoutes.MY_AUCTIONS + id)
 }
 
 export const fetchAuctionsByUser = async (type = '') => {
-  return apiRequest("get", apiRoutes.MY_AUCTIONS + type)
+  return apiRequest<string, Auction[]>("get", apiRoutes.MY_AUCTIONS + type)
 }
 
 export const postAuction = async (data: CreateAuctionFields) => {

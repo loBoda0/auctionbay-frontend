@@ -18,7 +18,6 @@ const AuctionPage:React.FC = () => {
   const [auction, setAuction] = useState<Auction | null>(null)
   const [minValue, setMinValue] = useState<number>(0)
   const [bids, setBids] = useState<Bid[]>([])
-  const [errorMessage, setErrorMessage] = useState<string>()
   const { id } = useParams<{ id: string }>()
   const { handleSubmit, control, setValue } = useCreateBid()
   const user = userStorage.getUser()
@@ -49,14 +48,9 @@ const AuctionPage:React.FC = () => {
     const fetchData = async () => {
       try {
         const { data } = await API.getAuctionById(id)
-        if (data.error) {
-          setErrorMessage(data.message)
-        }
-        else {
-          setAuction(data)
-          setBids(data.bids)
-          setTimeRemaining(getRemaining(data))
-        }
+        setAuction(data)
+        setBids(data.bids)
+        setTimeRemaining(getRemaining(data))
       } catch (error) {
         // Handle errors here
         console.error('Error fetching data:', error)
@@ -112,15 +106,12 @@ const AuctionPage:React.FC = () => {
     }
     const { data: newBid } = await API.placeBid(id!, data)
     if (newBid) {
-      setBids(prevBids => [...prevBids, newBid])
+      setBids((prevBids: Bid[]) => [...prevBids, newBid])
     }
   })
   
   return (
     <HomeLayout>
-      {
-        errorMessage && <p>{errorMessage}</p>
-      }
       {
         auction && bids ? <div className="inner">
         <div className="split" style={backgroundImageStyle}>
@@ -181,7 +172,7 @@ const AuctionPage:React.FC = () => {
             }
           </div>
         </div>
-      </div> : !errorMessage && <h1>Loading...</h1>
+      </div> : <h1>Loading...</h1>
       }
     </HomeLayout>
   )

@@ -4,10 +4,11 @@ import { NewPasswordFields } from "../hooks/react-hook-form/useNewPassword"
 import { RegisterUserFields } from "../hooks/react-hook-form/useRegisterForm"
 import { UpdatePasswordFields } from "../hooks/useUpdatePassword"
 import { UpdateUserFields } from "../hooks/useUpdateUser"
+import { User } from "../interfaces/user"
 import { apiRequest } from "./Api"
 
 export const login = async (data: LoginUserFields) => {
-  return apiRequest("post", apiRoutes.LOGIN, data)
+  return apiRequest<LoginUserFields, User>("post", apiRoutes.LOGIN, data)
 }
 
 export const register = async (data: RegisterUserFields) => {
@@ -19,11 +20,11 @@ export const logout = async () => {
 }
 
 export const updateUser = async (id: string, data: UpdateUserFields | UpdatePasswordFields) => {
-  return apiRequest("patch", apiRoutes.UPDATE_USER + id, data)
+  return apiRequest<UpdateUserFields | UpdatePasswordFields, User>("patch", apiRoutes.UPDATE_USER + id, data)
 }
 
 export const updateAvatar = async (data: FormData) => {
-  return apiRequest("post", apiRoutes.UPLOAD_AVATAR_IMAGE, data)
+  return apiRequest<FormData, User>("post", apiRoutes.UPLOAD_AVATAR_IMAGE, data)
 }
 
 export const refreshToken = async () => {

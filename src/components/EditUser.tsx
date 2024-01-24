@@ -18,14 +18,9 @@ const EditUser: React.FC<Props> = ({defaultValues, changeForm, onClose}) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const { data: userData , error} = await API.updateUser(defaultValues.id, data)
-      if (error) {
-        console.log(error)
-      }
-      else {
-        userStorage.setUser(userData)
-        window.location.reload()
-      }
+      const { data: userData }: {data: User} = await API.updateUser(defaultValues.id, data)
+      userStorage.setUser(userData)
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }
