@@ -6,8 +6,7 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL,
   timeout: 10000,
   headers: {
-      Authorization: undefined,
-      'Content-Type': 'application/json',
+      Authorization: undefined
   },
 })
 

@@ -1,5 +1,6 @@
 import { apiRoutes } from "../constants/apiConstants"
 import { CreateAuctionFields } from "../hooks/useAddEditAuction"
+import { Auction } from "../interfaces/auction"
 import { apiRequest } from "./Api"
 
 export const fetchAuctions = async () => {
@@ -15,11 +16,11 @@ export const fetchAuctionsByUser = async (type = '') => {
 }
 
 export const postAuction = async (data: CreateAuctionFields) => {
-  return apiRequest("post", apiRoutes.AUCTIONS, data)
+  return apiRequest<CreateAuctionFields, Auction>("post", apiRoutes.AUCTIONS, data)
 }
 
 export const updateAuction = async (auctionId: string, data: CreateAuctionFields) => {
-  return apiRequest("patch", apiRoutes.MY_AUCTIONS + auctionId, data)
+  return apiRequest<CreateAuctionFields, Auction>("patch", apiRoutes.MY_AUCTIONS + auctionId, data)
 }
 
 export const auctionUpdateImage = async (auctionId: string, data: FormData) => {

@@ -51,7 +51,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
 
   const createAuction = async (data: CreateAuctionFields) => {
     try {
-      const {data: auction, status} = await API.postAuction(data)
+      const {data: auction, status}: { data: Auction, status: number } = await API.postAuction(data)
       if (status === 201) {
         if (file !== null && file !== undefined) {
           const formData = new FormData()
@@ -82,7 +82,7 @@ const AddEditAuction: React.FC<Props> = ({isEdit, onClose, defaultValues}) => {
   const updateAuction = async (data: Auction) => {
     try {
       if (data) {
-        const {data: auction, status} = await API.updateAuction(data.id, data)
+        const {data: auction, status}: { data: Auction, status: number } = await API.updateAuction(data.id, data)
         if (status === 200) {
           if (file) {
             const formData = new FormData()
