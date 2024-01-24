@@ -11,7 +11,7 @@ const Auctions: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data }: { data: Auction[] } = await API.fetchAuctions()
+        const { data } = await API.fetchAuctions()
         setAuctions(data)
       } catch (error) {
         // Handle errors here

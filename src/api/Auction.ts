@@ -4,7 +4,7 @@ import { Auction } from "../interfaces/auction"
 import { apiRequest } from "./Api"
 
 export const fetchAuctions = async () => {
-  return apiRequest("get", apiRoutes.AUCTIONS)
+  return apiRequest<unknown, Auction[]>("get", apiRoutes.AUCTIONS)
 }
 
 export const getAuctionById = async (id: string | undefined) => {
