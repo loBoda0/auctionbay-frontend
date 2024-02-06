@@ -1,5 +1,6 @@
 .page-wrapper {
   display: flex;
+  height: 100vh;
   .image {
     display: flex;
     flex-grow: 1;
@@ -9,6 +10,10 @@
       margin: 0 auto;
       height: 100vh;
       width: auto;
+    }
+    @media only screen and (max-width: 450px) {
+      display: none;
+      height: 100%;
     }
   }
   .auth-right {

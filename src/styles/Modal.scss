@@ -19,6 +19,9 @@
   flex-direction: column;
   width: 533px;
   gap: 1rem;
+  @media only screen and (max-width: 450px) {
+    margin: .5rem;
+  }
 }
 
 .modal-close {

@@ -60,11 +60,15 @@ const Navbar: React.FC<Props> = ({openModal, openSettings}) => {
           <div className="nav-tabs">
             <Link to={'/auctions'} className={clsx('nav-tab', pathname === '/auctions' ? 'active' : null)}>
               <img src={Home} alt="home" />
-              Auctions
+              <span>
+                Auctions
+              </span>
             </Link>
-            <Link to={'/profile'} className={clsx('nav-tab', pathname === '/profile' ? 'active' : null)}>
+            <Link to={'/profile'} className={clsx('nav-tab ', pathname === '/profile' ? 'active' : null)}>
               <img src={Person} alt="profile" />
-              Profile
+              <span>
+                Profile
+              </span>
             </Link>
           </div>
         </div>

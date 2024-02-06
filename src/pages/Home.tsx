@@ -3,6 +3,7 @@ import logo from '/logo.svg'
 import { Link } from 'react-router-dom'
 import '../styles/home.scss'
 import landingImage from '/landing-image.svg'
+import landingMobile from '/mobile-image.svg'
 
 const Home: React.FC = () => {
   return (
@@ -29,7 +30,11 @@ const Home: React.FC = () => {
         </div>
         <Link to={'/signup'} className='button primary'>Start bidding</Link>
 
-        <img src={landingImage} alt="landing image" />
+        <picture>
+          <source media='(max-width: 450px)' srcSet={landingMobile} />
+          <source media='(min-width: 450px)' srcSet={landingImage} />
+          <img src={landingImage} alt='hero' />
+        </picture>
       </div>
     </>
   )

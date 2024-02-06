@@ -26,13 +26,18 @@ nav {
     padding: .5rem 1rem;
     justify-content: center;
     align-items: center;
-    gap: 4px;
+    gap: .5rem;
     align-self: stretch;
     line-height: 120%;
     cursor: pointer;
     img {
       width: 1.5rem;
       height: 1.5rem;
+    }
+    span {
+      @media only screen and (max-width: 450px) {
+        display: none;
+      }
     }
   }
   .nav-tab.active {
